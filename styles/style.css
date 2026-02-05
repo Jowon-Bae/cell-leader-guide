@@ -571,7 +571,7 @@ body {
 .splash-logo-img {
   width: 65px;
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   /* Invert color to make black logo white, plus drop shadow for visibility */
   filter: invert(1) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
   cursor: pointer;
