@@ -1,10 +1,10 @@
 
 
-import { renderHome } from './home.js?v=52';
-import { renderMeeting } from './meeting.js?v=52';
-import { renderFuneral } from './funeral.js?v=52';
-import { renderCommunity } from './community.js?v=52';
-import { renderVideoDetail } from './video_detail.js?v=52';
+import { renderHome } from './home.js?v=54';
+import { renderMeeting } from './meeting.js?v=54';
+import { renderFuneral } from './funeral.js?v=54';
+import { renderCommunity } from './community.js?v=54';
+import { renderVideoDetail } from './video_detail.js?v=54';
 
 // State
 let currentTab = 'home';
@@ -141,8 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (phase3) {
         const enterApp = () => {
             phase3.classList.add('hidden');
-            // Do NOT remove phase3, just hide it so we can go back
-            // setTimeout(() => { phase3.remove(); }, 1000); 
+            // Reveal the app smoothly
+            document.getElementById('app').classList.add('app-visible');
         };
         phase3.addEventListener('click', enterApp);
     }

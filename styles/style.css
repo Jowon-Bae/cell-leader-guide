@@ -63,6 +63,13 @@ body {
   height: 100vh;
   overflow: hidden;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  /* Hidden initially to prevent flash during splash */
+  transition: opacity 0.5s ease-out;
+}
+
+#app.app-visible {
+  opacity: 1;
 }
 
 /* Header */
