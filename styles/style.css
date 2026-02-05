@@ -472,8 +472,10 @@ body {
 }
 
 .loading-logo {
-  width: 76px;
+  width: 65px;
   height: auto;
+  margin-bottom: 80px;
+  /* Offset to match splash logo position (which has text below) */
   filter: invert(1);
   /* White logo */
   animation: logoSpin 2s ease-in-out forwards;
@@ -567,7 +569,7 @@ body {
 }
 
 .splash-logo-img {
-  width: 76px;
+  width: 65px;
   height: auto;
   margin-bottom: 20px;
   /* Invert color to make black logo white, plus drop shadow for visibility */
