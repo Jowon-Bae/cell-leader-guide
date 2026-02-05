@@ -131,7 +131,7 @@ export function renderHome(container, callbacks = {}) {
     // Using slider-container class for consistency in size/ratio (16:9)
     welcomeSection.className = 'slider-container';
     welcomeSection.style.marginTop = 'var(--spacing-md)';
-    welcomeSection.style.background = 'black'; // Fill background if image aspect differs
+    welcomeSection.style.background = 'transparent'; // Remove black bars
 
     // Link Wrapper
     const welcomeLink = document.createElement('a');
@@ -157,7 +157,7 @@ export function renderHome(container, callbacks = {}) {
     const worshipSection = document.createElement('div');
     worshipSection.className = 'slider-container';
     worshipSection.style.marginTop = 'var(--spacing-md)';
-    worshipSection.style.background = 'black';
+    worshipSection.style.background = 'transparent';
 
     const worshipLink = document.createElement('a');
     worshipLink.href = 'http://seouldream.org/Board/Index/3639';
