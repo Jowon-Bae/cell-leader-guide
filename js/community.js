@@ -56,33 +56,22 @@ export function renderCommunity(container) {
         card.style.cursor = 'pointer';
         card.style.transition = 'transform 0.2s';
 
-        // Image Container (Aspect Ratio)
+        // Image Container only
         const imgContainer = document.createElement('div');
         imgContainer.style.width = '100%';
-        imgContainer.style.height = '120px'; // Fixed height for list item
-        imgContainer.style.overflow = 'hidden';
+        imgContainer.style.height = 'auto'; // Let image define height
+        imgContainer.style.display = 'block';
 
         const img = document.createElement('img');
         img.src = item.image;
         img.alt = item.title;
         img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'cover';
+        img.style.height = 'auto';
+        img.style.display = 'block'; // Remove bottom space
+
         imgContainer.appendChild(img);
-
-        // Title Container
-        const content = document.createElement('div');
-        content.style.padding = 'var(--spacing-md)';
-
-        const title = document.createElement('h3');
-        title.textContent = item.title;
-        title.style.margin = '0';
-        title.style.fontSize = '1.1rem';
-        title.style.color = 'var(--text-main)';
-
-        content.appendChild(title);
         card.appendChild(imgContainer);
-        card.appendChild(content);
+        // Title section removed as per request
 
         // Click Event -> Detail View
         card.onclick = () => renderCommunityDetail(container, item);
