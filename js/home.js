@@ -105,7 +105,7 @@ export function renderHome(container, callbacks = {}) {
             action: true,
             data: {
                 videoId: 'RM7dsSUV68w',
-                title: '3기 제자훈련 수료 영상',
+                title: '2026.01.25 신도배 목사 주일 설교',
                 description: '제자훈련 과정을 마친 수료생들의 간증과 은혜의 기록입니다.\n\n"내가 그리스도와 함께 십자가에 못 박혔나니 그런즉 이제는 내가 사는 것이 아니요 오직 내 안에 그리스도께서 사시는 것이라"'
             }
         },
