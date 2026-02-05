@@ -18,25 +18,25 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="셀장 가이드">
-    <link rel="apple-touch-icon" href="assets/로고.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
 
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="styles/style.css?v=49">
+    <link rel="stylesheet" href="styles/style.css?v=50">
 </head>
 
 <body>
     <!-- Phase 0: Loading (Rotating Logo) -->
     <div id="splash-loading">
-        <img src="assets/로고.png" alt="Loading Logo" class="loading-logo">
+        <img src="assets/logo.png" alt="Loading Logo" class="loading-logo">
     </div>
 
     <!-- Phase 1: Video Only -->
     <div id="splash-phase-1" class="hidden">
         <video id="splash-video" autoplay muted loop playsinline>
-            <source src="assets/셀가이드 어플용.mp4" type="video/mp4">
+            <source src="assets/splash_video.mp4" type="video/mp4">
         </video>
         <div class="splash-click-capture"></div> <!-- Invisible overlay to capture clicks reliably -->
     </div>
@@ -44,7 +44,7 @@
     <!-- Phase 2: Black Background + Logo + Text -->
     <div id="splash-phase-2" class="hidden">
         <div class="splash-content">
-            <img src="assets/로고.png" alt="Logo" class="splash-logo-img">
+            <img src="assets/logo.png" alt="Logo" class="splash-logo-img">
             <div class="splash-text">
                 <span class="church-name">SEOUL DREAM CHURCH</span><br>
                 <span class="guide-title">CELL LEADER GUIDE</span>
@@ -67,14 +67,14 @@
                 <li><span>07</span> 셀 안에서는 가능하면 형제, 자매 또는 교회 직분등의 호칭으로 부르며 대화해 주시기 바랍니다.</li>
                 <li><span>08</span> 이성 간에는 개인적으로 연락을 하지 않습니다. 남성 셀장이 여성 셀원에게 연락할 일이 생기면 셀모를 통해서 연락 하도록 합니다.</li>
             </ul>
-            <img src="assets/로고.png" alt="Logo" class="guidelines-bottom-logo">
+            <img src="assets/logo.png" alt="Logo" class="guidelines-bottom-logo">
         </div>
     </div>
 
     <div id="app">
         <!-- Header will be rendered here -->
         <header class="header">
-            <img src="assets/로고.png" alt="Seoul Dream Church Logo" class="header-logo">
+            <img src="assets/logo.png" alt="Seoul Dream Church Logo" class="header-logo">
             <button id="header-back-btn" class="header-back-btn">
                 <i class="fa-solid fa-arrow-left"></i>
             </button>
@@ -110,7 +110,7 @@
     </div>
 
     <!-- Application Script -->
-    <script type="module" src="js/app.js?v=49"></script>
+    <script type="module" src="js/app.js?v=50"></script>
 </body>
 
 </html>

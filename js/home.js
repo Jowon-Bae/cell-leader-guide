@@ -90,11 +90,11 @@ export function renderHome(container, callbacks = {}) {
 
     // 2. Main Image Slider
     const mainImages = [
-        { src: 'assets/화면 슬라이드1.jpg' },
-        { src: 'assets/화면 슬라이드2.jpg' },
-        { src: 'assets/화면 슬라이드3.jpg' },
-        { src: 'assets/화면 슬라이드4.jpg' },
-        { src: 'assets/화면 슬라이드5.jpg' }
+        { src: 'assets/slide1.jpg' },
+        { src: 'assets/slide2.jpg' },
+        { src: 'assets/slide3.jpg' },
+        { src: 'assets/slide4.jpg' },
+        { src: 'assets/slide5.jpg' }
     ];
     wrapper.appendChild(createSlider(mainImages, 5000));
 
@@ -143,7 +143,7 @@ export function renderHome(container, callbacks = {}) {
     welcomeLink.style.height = '100%';
 
     const welcomeImg = document.createElement('img');
-    welcomeImg.src = 'assets/웰컴.png';
+    welcomeImg.src = 'assets/welcome.png';
     welcomeImg.loading = 'lazy';
     welcomeImg.style.width = '100%';
     welcomeImg.style.height = '100%';
@@ -168,7 +168,7 @@ export function renderHome(container, callbacks = {}) {
     worshipLink.style.height = '100%';
 
     const worshipImg = document.createElement('img');
-    worshipImg.src = 'assets/워십 가이드.png';
+    worshipImg.src = 'assets/worship_guide.png';
     worshipImg.loading = 'lazy';
     worshipImg.style.width = '100%';
     worshipImg.style.height = '100%';
