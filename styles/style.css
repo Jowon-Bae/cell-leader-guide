@@ -642,13 +642,15 @@ body {
   /* User requested rounded corners again */
   /* Removing radius for full-screen feel, or keep small? User said "Box" */
   /* Let's keep slight radius but make it fill mostly */
-  width: 96%;
-  height: 96%;
-  /* Force it to fill the height */
+  width: 90%;
   max-width: 600px;
-  /* Keep max width for tablet/desktop sanity */
-  max-height: none;
-  /* Remove limit */
+  /* Fit content comfortably */
+  height: auto;
+  min-height: auto;
+  max-height: 90vh;
+  /* Don't overflow screen */
+  margin: auto;
+  /* Center in flex container */
   overflow-y: auto;
   text-align: left;
   display: flex;
