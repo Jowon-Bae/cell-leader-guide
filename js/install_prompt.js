@@ -40,7 +40,7 @@ function showIOSPrompt() {
         <div class="install-modal">
             <button class="close-modal">&times;</button>
             <div class="install-icon">
-                <img src="assets/icon_final.png" alt="App Icon">
+                <img src="assets/logo.png" alt="App Icon">
             </div>
             <h3>앱으로 설치하기</h3>
             <p>이 웹사이트를 앱처럼 홈 화면에 추가하여<br>편리하게 사용하세요.</p>
@@ -82,7 +82,7 @@ function showAndroidInstallBtn() {
         <div class="install-modal">
             <button class="close-modal">&times;</button>
             <div class="install-icon">
-                <img src="assets/icon_final.png" alt="App Icon">
+                <img src="assets/logo.png" alt="App Icon">
             </div>
             <h3>앱으로 설치하기</h3>
             <p>서울드림교회 셀장 가이드 앱을<br>설치하시겠습니까?</p>
