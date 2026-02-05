@@ -13,7 +13,8 @@ export function renderVideoDetail(container, videoData, onBack) {
     header.style.padding = 'var(--spacing-md)';
     header.style.display = 'flex';
     header.style.alignItems = 'center';
-    header.style.borderBottom = '1px solid #333';
+    header.style.borderBottom = '1px solid #eee';
+    header.style.backgroundColor = '#f9f9f9'; // Visual cue for update
 
     const backBtn = document.createElement('button');
     backBtn.innerHTML = '<i class="fas fa-arrow-left"></i>';

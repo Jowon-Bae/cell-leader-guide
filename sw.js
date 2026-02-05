@@ -1,4 +1,4 @@
-// Basic Service Worker to enable PWA installation (v3)
+// Basic Service Worker to enable PWA installation (v4)
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install');
 });
