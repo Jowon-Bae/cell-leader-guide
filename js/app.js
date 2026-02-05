@@ -77,18 +77,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Step 0: Loading Screen (Auto Advance)
     if (loadingScreen && phase1) {
         setTimeout(() => {
-            loadingScreen.classList.add('hidden');
+            // 1. Make Phase 1 immediately visible (opaque) BEHIND the loading screen
+            // Disable transition temporarily so it doesn't fade in
+            phase1.style.transition = 'none';
             phase1.classList.remove('hidden');
 
-            // Ensure video plays
+            // 2. Start Video
             if (video) {
-                video.muted = true; // Ensure muted for autoplay
+                video.muted = true;
                 video.play().catch(e => console.log('Autoplay prevented:', e));
             }
 
-            // Remove loading screen from DOM after transition
+            // 3. Fade out Loading Screen (revealing Phase 1)
+            requestAnimationFrame(() => {
+                loadingScreen.classList.add('hidden');
+
+                // Restore Phase 1 transition for later exit
+                setTimeout(() => {
+                    phase1.style.transition = '';
+                }, 100);
+            });
+
+            // 4. Cleanup
             setTimeout(() => loadingScreen.remove(), 1000);
-        }, 2200); // 2s animation + 0.2s pause
+        }, 2200);
     }
 
     // Step 1: Click Video -> Go to Phase 2
