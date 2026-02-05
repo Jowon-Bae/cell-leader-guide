@@ -19,7 +19,7 @@ export function renderVideoDetail(container, videoData, onBack) {
     backBtn.innerHTML = '<i class="fas fa-arrow-left"></i>';
     backBtn.style.background = 'none';
     backBtn.style.border = 'none';
-    backBtn.style.color = 'white';
+    backBtn.style.color = 'var(--text-main)';
     backBtn.style.fontSize = '1.2rem';
     backBtn.style.marginRight = '12px';
     backBtn.style.cursor = 'pointer';

@@ -46,7 +46,7 @@ export function renderCommunity(container) {
     const list = document.createElement('div');
     list.style.display = 'flex';
     list.style.flexDirection = 'column';
-    list.style.gap = 'var(--spacing-md)';
+    // Gap removed to rely on .card margin-bottom (matches Home spacing better or makes it narrower as requested)
 
     COMMUNITY_ITEMS.forEach(item => {
         const card = document.createElement('div');
