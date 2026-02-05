@@ -114,7 +114,7 @@ export function renderHome(container, callbacks = {}) {
             action: true,
             data: {
                 videoId: 'tM2AE8ii0Bo',
-                title: '특별 새벽 기도회 특송',
+                title: '2026.01.25 김여호수아 목사 주일 설교',
                 description: '우리 교회의 뜨거운 기도의 현장을 담았습니다.\n새벽을 깨우는 거룩한 습관으로 나아갑시다.'
             }
         }
