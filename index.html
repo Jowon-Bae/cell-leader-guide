@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>서울드림교회 셀장 가이드</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="셀장 가이드">
+    <link rel="apple-touch-icon" href="assets/로고.png">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="styles/style.css?v=49">
+</head>
+
+<body>
+    <!-- Phase 0: Loading (Rotating Logo) -->
+    <div id="splash-loading">
+        <img src="assets/로고.png" alt="Loading Logo" class="loading-logo">
+    </div>
+
+    <!-- Phase 1: Video Only -->
+    <div id="splash-phase-1" class="hidden">
+        <video id="splash-video" autoplay muted loop playsinline>
+            <source src="assets/셀가이드 어플용.mp4" type="video/mp4">
+        </video>
+        <div class="splash-click-capture"></div> <!-- Invisible overlay to capture clicks reliably -->
+    </div>
+
+    <!-- Phase 2: Black Background + Logo + Text -->
+    <div id="splash-phase-2" class="hidden">
+        <div class="splash-content">
+            <img src="assets/로고.png" alt="Logo" class="splash-logo-img">
+            <div class="splash-text">
+                <span class="church-name">SEOUL DREAM CHURCH</span><br>
+                <span class="guide-title">CELL LEADER GUIDE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 3: Guidelines -->
+    <div id="splash-phase-3" class="hidden">
+        <div class="splash-content guidelines-container">
+            <h3>셀장 지침서</h3>
+            <ul class="guidelines-list">
+                <li><span>01</span> 셀원들이 담임목사의 심방이나 상담을 원할 경우 직접 요청할 수 있고, 또는 셀장이나 담당교역자를 통해 만날 수 있습니다.</li>
+                <li><span>02</span> 개인 사정으로 셀을 쉬는 것은 부끄러운 일이 아닙니다. 셀을 쉬면서 교회 이동에 대한 고민을 하지 않도록 격려해 주시고, 언제든 셀에 돌아올 수 있다고
+                    안내해 주시기 바랍니다.</li>
+                <li><span>03</span> 셀 안에서 개인의 기도제목, 개인적인 상황을 공유할 때는 당사자에게 먼저 확인받습니다.</li>
+                <li><span>04</span> 셀 모임은 교회에서 드리는 셀가이드 중심으로 나누어 주시고, 성경공부를 넘어 삶을 나누고 기도하고 격려하는 모임으로 진행해 주십시오.</li>
+                <li><span>05</span> 셀장은 셀 모임 뿐만 아니라 셀원들과 개인적으로 만나는 자리에서도 술은 마시지 않습니다.</li>
+                <li><span>06</span> 셀 안에서 금전거래, 투자 권유, 영업 행위, 정치적 대화를 하지 못하도록 서로를 지켜 주시기 바랍니다.</li>
+                <li><span>07</span> 셀 안에서는 가능하면 형제, 자매 또는 교회 직분등의 호칭으로 부르며 대화해 주시기 바랍니다.</li>
+                <li><span>08</span> 이성 간에는 개인적으로 연락을 하지 않습니다. 남성 셀장이 여성 셀원에게 연락할 일이 생기면 셀모를 통해서 연락 하도록 합니다.</li>
+            </ul>
+            <img src="assets/로고.png" alt="Logo" class="guidelines-bottom-logo">
+        </div>
+    </div>
+
+    <div id="app">
+        <!-- Header will be rendered here -->
+        <header class="header">
+            <img src="assets/로고.png" alt="Seoul Dream Church Logo" class="header-logo">
+            <button id="header-back-btn" class="header-back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </header>
+
+        <!-- Main Content (Dynamic) -->
+        <main id="main-content">
+            <!-- Content Injected via JS -->
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" data-tab="home">
+                <i class="fas fa-home nav-icon"></i>
+                <span>홈</span>
+            </div>
+            <div class="nav-item" data-tab="community">
+                <i class="fas fa-users nav-icon"></i>
+                <span>공동체</span>
+            </div>
+            <div class="nav-item" data-tab="guide">
+                <i class="fas fa-book-open nav-icon"></i>
+                <span>셀 가이드</span>
+            </div>
+            <div class="nav-item" data-tab="funeral">
+                <i class="fas fa-star-of-life nav-icon"></i>
+                <span>장례</span>
+            </div>
+        </nav>
+
+        <!-- Global Modals -->
+        <div id="modal-container"></div>
+    </div>
+
+    <!-- Application Script -->
+    <script type="module" src="js/app.js?v=49"></script>
+</body>
+
+</html>

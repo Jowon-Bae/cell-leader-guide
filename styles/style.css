@@ -1,0 +1,853 @@
+:root {
+  /* Premium Color Palette */
+  --primary-color: #1a237e;
+  /* Deep Indigo */
+  --primary-light: #534bae;
+  --primary-dark: #000051;
+  --accent-color: #ffd700;
+  /* Gold */
+  --accent-secondary: #ffab00;
+  /* Amber */
+  --bg-color: #f5f5f7;
+  /* Off-white/Light Gray */
+  --card-bg: #ffffff;
+  --text-main: #333333;
+  --text-sub: #666666;
+  --text-light: #ffffff;
+  --danger-color: #d32f2f;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 15px rgba(26, 35, 126, 0.3);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-round: 50px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#app {
+  width: 100%;
+  max-width: 480px;
+  /* Mobile constraint */
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+  background: url('../assets/어플 박스 배경.jpeg') no-repeat center center / cover;
+  /* User requested to replace header with this image too */
+  color: white;
+  padding: var(--spacing-md) var(--spacing-md);
+  /* Reduced padding for compact look */
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  /* Space out Logo and Back Button */
+  align-items: center;
+}
+
+.header-logo {
+  height: 2rem;
+  /* Adjusted to approximate the size of the previous "Jesus Community" text */
+  width: auto;
+  filter: invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  /* White logo */
+}
+
+.header-back-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  /* Icon color */
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  /* Touch target */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.header-back-btn:active {
+  opacity: 0.6;
+  transform: translateX(-2px);
+  /* Slight feedback */
+}
+
+/* Main Content Area */
+#main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  padding-bottom: 80px;
+  /* Space for navbar */
+}
+
+/* Animations using Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-md);
+  transition: transform 0.2s;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+/* Oath Card Special Styling */
+.oath-card {
+  background: linear-gradient(135deg, #ffffff, #fdfbf7);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  text-align: center;
+}
+
+.oath-badge {
+  display: inline-block;
+  background: url('../assets/어플 박스 배경.jpeg') no-repeat center center / cover;
+  /* User requested image */
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--radius-round);
+  font-size: 0.8rem;
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+}
+
+.oath-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--primary-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Buttons */
+.btn {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  background-color: var(--card-bg);
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-accent {
+  background: linear-gradient(to right, var(--accent-secondary), var(--accent-color));
+  color: var(--primary-dark);
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+/* Tab Navigation */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 65px;
+  background: var(--card-bg);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 20;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-sub);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-item.active {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.nav-icon {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+/* Grid for Action Buttons */
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.action-card {
+  background: url('../assets/어플 박스 배경.jpeg') no-repeat center center / cover;
+  /* User requested "App Box Background" */
+  color: white;
+  /* Assuming dark background for the image */
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  height: 100%;
+  justify-content: center;
+}
+
+.action-card i {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+  color: white;
+  /* Changed from primary-light for visibility on image */
+}
+
+.action-card span {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+
+.modal-overlay.open .modal-content {
+  transform: translateY(0);
+}
+
+/* Meeting Tab Styling */
+.timer-card {
+  text-align: center;
+}
+
+.timer-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: var(--spacing-md) 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-controls {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+/* User requested "App Top" image for Buttons and Tabs */
+.image-btn {
+  background: url('../assets/어플 박스 배경.jpeg') no-repeat center center / cover;
+  color: white;
+  border: none;
+  font-weight: bold;
+  opacity: 0.9;
+  flex: 1;
+}
+
+.image-btn:hover {
+  opacity: 1;
+}
+
+/* Steps Tabs */
+.tabs-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+  gap: 4px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 4px;
+  border: none;
+  background: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #ddd;
+}
+
+/* Custom Image Style for Tabs */
+.image-tab {
+  background: white;
+  /* Default state */
+}
+
+/* When active or requested to visually match "Step 1" etc with image */
+.image-tab {
+  background: url('../assets/어플 박스 배경.jpeg') no-repeat center center / cover;
+  color: white;
+  opacity: 0.6;
+  /* Dim inactive tabs */
+  border: none;
+}
+
+.image-tab.active {
+  opacity: 1;
+  /* Bright active tab */
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.step-content {
+  min-height: 200px;
+}
+
+.step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  border-bottom: 2px solid #eee;
+  padding-bottom: var(--spacing-sm);
+}
+
+.step-badge {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.step-time {
+  font-size: 0.9rem;
+  color: var(--text-sub);
+  background: #eee;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.step-guide h4,
+.step-warning h4 {
+  margin-bottom: var(--spacing-sm);
+  font-size: 1rem;
+}
+
+.step-guide ul {
+  padding-left: 20px;
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+}
+
+.step-warning {
+  background: #fff8e1;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 4px solid #ffc107;
+  font-size: 0.9rem;
+}
+
+
+/* Splash Phase 0 (Loading) */
+#splash-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 11000;
+  /* Highest priority */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease-out, visibility 0.5s;
+}
+
+.loading-logo {
+  width: 76px;
+  height: auto;
+  filter: invert(1);
+  /* White logo */
+  animation: logoSpin 2s ease-in-out forwards;
+}
+
+@keyframes logoSpin {
+  0% {
+    transform: rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(720deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Splash Phase 1 (Video) */
+#splash-phase-1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  /* Highest priority */
+  cursor: pointer;
+  /* Indicate clickable */
+  transition: opacity 0.8s ease-out, visibility 0.8s;
+  background: black;
+}
+
+#splash-phase-1 video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Splash Phase 2 (Logo) */
+#splash-phase-2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/두번째 화면 배경.jpeg') no-repeat center center / cover;
+  /* User requested full fill */
+  background-color: black;
+  /* Fallback */
+  z-index: 9000;
+  /* Behind Phase 1 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease-out, visibility 0.8s;
+  cursor: pointer;
+  /* Indicate clickable anywhere */
+}
+
+.splash-click-capture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10005;
+  /* Above everything in phase 1 */
+  background: transparent;
+  /* Invisible but clickable */
+  cursor: pointer;
+  pointer-events: auto;
+  /* Ensure it captures clicks */
+}
+
+/* Common Hidden State */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-content {
+  text-align: center;
+  color: white;
+  animation: scaleUp 0.8s ease-out;
+  /* margin-top removed to center it perfectly on the black screen */
+}
+
+.splash-logo-img {
+  width: 76px;
+  height: auto;
+  margin-bottom: 20px;
+  /* Invert color to make black logo white, plus drop shadow for visibility */
+  filter: invert(1) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+  cursor: pointer;
+  transition: transform 0.2s;
+  opacity: 0.5;
+  /* Added 50% opacity as requested */
+}
+
+.splash-logo-img:active {
+  transform: scale(0.9);
+}
+
+.splash-text {
+  font-size: 1.0rem;
+  /* Reduced from 1.2rem */
+  font-weight: 300;
+  /* Thinner (Light) */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+  /* Widened to 1px as requested */
+  line-height: 1.8;
+}
+
+.guide-title {
+  color: #ffd700;
+  /* Yellow/Gold */
+  font-weight: 400;
+  /* Slightly bolder than the name */
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Splash Phase 3 (Guidelines) */
+#splash-phase-3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/두번째 화면 배경.jpeg') no-repeat center center / cover;
+  /* Same as Phase 2 */
+  background-color: black;
+  z-index: 8000;
+  /* Behind Phase 2 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease-out, visibility 0.8s;
+  cursor: pointer;
+  padding: 0;
+  /* Remove outer padding to fill screen */
+}
+
+.guidelines-container {
+  background: rgba(0, 0, 0, 0.3);
+  /* 30% opacity as requested */
+  padding: 20px;
+  /* Increased internal padding for comfort */
+  border-radius: 12px;
+  /* User requested rounded corners again */
+  /* Removing radius for full-screen feel, or keep small? User said "Box" */
+  /* Let's keep slight radius but make it fill mostly */
+  width: 96%;
+  height: 96%;
+  /* Force it to fill the height */
+  max-width: 600px;
+  /* Keep max width for tablet/desktop sanity */
+  max-height: none;
+  /* Remove limit */
+  overflow-y: auto;
+  text-align: left;
+  display: flex;
+  /* Flex to center content vertically if short, or stretch */
+  flex-direction: column;
+}
+
+.guidelines-container h3 {
+  text-align: center;
+  margin-bottom: 12px;
+  /* Reduced from 20px */
+  font-size: 1.2rem;
+  /* Slightly smaller header */
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 8px;
+}
+
+.guidelines-list {
+  list-style: none;
+  font-size: 0.95rem;
+  /* Explicitly 0.95rem */
+  line-height: 1.5;
+  letter-spacing: -1px;
+  /* User requested tight spacing (-2 equivalent) */
+  color: #eee;
+  flex: 1;
+}
+
+.guidelines-list li {
+  margin-bottom: 10px;
+  /* Slight increase in margin */
+  display: flex;
+  align-items: flex-start;
+}
+
+.guidelines-list li span {
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-right: 8px;
+  min-width: 24px;
+}
+
+.guidelines-bottom-logo {
+  height: 2rem;
+  /* Matched to .header-logo size */
+  width: auto;
+  align-self: center;
+  /* Center horizontally in flex column */
+  margin-top: 10px;
+  /* Reduced from 20px to move it up */
+  opacity: 0.4;
+  /* 40% opacity as requested */
+  filter: invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  /* Match header logo filter for white + shadow */
+}
+
+.slider-container {
+  width: 100%;
+  aspect-ratio: 16/9;
+  /* Standard video ratio, adjustable */
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  background: black;
+}
+
+.slider-track {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slider-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  /* Hidden by default */
+  transition: opacity 1.5s ease-in-out;
+  /* Dissolve Effect */
+  z-index: 1;
+}
+
+.slider-slide.active {
+  opacity: 1;
+  /* Visible */
+  z-index: 2;
+}
+
+.slider-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+
+}
+
+/* Install Modal Styling */
+.install-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.install-modal {
+  background: white;
+  width: 85%;
+  max-width: 320px;
+  padding: 24px;
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: scaleUpPrompt 0.3s ease-out;
+}
+
+.install-icon img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.install-modal h3 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.install-modal p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.ios-instruction {
+  text-align: left;
+  background: #f5f5f7;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.ios-instruction p {
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.share-icon-img {
+  width: 18px;
+  vertical-align: middle;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn-check-ok {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+@keyframes scaleUpPrompt {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
