@@ -40,12 +40,12 @@ function showIOSPrompt() {
         <div class="install-modal">
             <button class="close-modal">&times;</button>
             <div class="install-icon">
-                <img src="assets/로고.png" alt="App Icon">
+                <img src="assets/icon_final.png" alt="App Icon">
             </div>
             <h3>앱으로 설치하기</h3>
             <p>이 웹사이트를 앱처럼 홈 화면에 추가하여<br>편리하게 사용하세요.</p>
             <div class="ios-instruction">
-                <p>1. 하단의 <img src="assets/share_icon.png" class="share-icon-img" onerror="this.style.display='none'"> <strong>공유 버튼</strong> 클릭</p>
+                <p>1. 하단의 <strong>[공유]</strong> 버튼(네모 화살표) 클릭</p>
                 <p>2. <strong>'홈 화면에 추가'</strong> 선택</p>
             </div>
             <button class="btn-check-ok">알겠습니다</button>
@@ -82,7 +82,7 @@ function showAndroidInstallBtn() {
         <div class="install-modal">
             <button class="close-modal">&times;</button>
             <div class="install-icon">
-                <img src="assets/로고.png" alt="App Icon">
+                <img src="assets/icon_final.png" alt="App Icon">
             </div>
             <h3>앱으로 설치하기</h3>
             <p>서울드림교회 셀장 가이드 앱을<br>설치하시겠습니까?</p>
