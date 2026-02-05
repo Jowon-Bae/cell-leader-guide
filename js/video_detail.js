@@ -68,24 +68,25 @@ export function renderVideoDetail(container, videoData, onBack) {
 
     // Description Title
     const descTitle = document.createElement('h4');
-    descTitle.textContent = '메모 / 설교 요약';
-    descTitle.style.marginBottom = '8px';
-    descTitle.style.color = 'var(--primary-light)';
+    descTitle.textContent = videoData.descriptionTitle || '메모 / 설교 요약';
+    descTitle.style.marginBottom = '12px';
+    descTitle.style.color = '#333'; // Dark grey for title on white background
+    descTitle.style.fontSize = '1.0rem';
+    descTitle.style.fontWeight = '600';
     contentArea.appendChild(descTitle);
 
-    // Text Area (Read-only description OR Editable notes?)
-    // "글씨를 넣을 수 있는 공간" -> Ambiguous. Let's provide a textarea for *User* notes if that's the intent, 
-    // OR a div for *Admin* text. 
-    // Usually "Space to put text" in a request like this implies "I want to see text here".
-    // I'll provide a pre-filled text area with description.
-
+    // Text Area
     const descBox = document.createElement('div');
-    descBox.style.lineHeight = '1.6';
-    descBox.style.color = '#ddd';
+    descBox.style.lineHeight = '1.8';
+    descBox.style.color = 'black'; // Requested: Black
     descBox.style.fontSize = '0.95rem';
-    descBox.innerHTML = videoData.description ? videoData.description.replace(/\n/g, '<br>') : '내용이 없습니다.';
+    descBox.style.whiteSpace = 'pre-wrap'; // Preserve newlines
+    descBox.innerHTML = videoData.description ? videoData.description : '내용이 없습니다.';
 
-    contentArea.appendChild(descBox);
+    // Style the content area to be paper-like for readability of black text
+    contentArea.style.backgroundColor = 'white';
+    contentArea.style.borderRadius = '12px 12px 0 0'; // Round top corners
+    contentArea.style.color = 'black';
     wrapper.appendChild(contentArea);
 
     container.appendChild(wrapper);
