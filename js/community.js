@@ -16,8 +16,8 @@ const COMMUNITY_ITEMS = [
     {
         id: 'placement',
         title: '셀 배정',
-        image: 'assets/community_placement.png',
-        detailImage: 'assets/community_placement.png'
+        image: 'assets/community_placement_v2.png',
+        detailImage: 'assets/community_placement_v2.png'
     },
     {
         id: 'officers',
