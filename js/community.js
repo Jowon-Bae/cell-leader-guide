@@ -154,59 +154,62 @@ function renderCommunityDetail(container, item) {
 
 // PDF Viewer Implementation
 async function renderPdfViewer(container, pdfUrl) {
-    alert("Trace 4: PDF Viewer Start");
+    alert("Trace 4: PDF Viewer Start (v130 LOCAL)");
+
     // 1. Check if pdf.js is loaded
     if (!window.pdfjsLib) {
         // Show loading spinner
         const loader = document.createElement('div');
-        loader.textContent = 'PDF 뷰어 로딩 중...';
+        loader.textContent = 'PDF 로딩 중...';
         loader.style.padding = '20px';
         loader.style.textAlign = 'center';
         container.appendChild(loader);
 
         try {
-            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
-            // Worker is needed
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            alert("Trace 4.1: Loading Local Libs...");
+            // Load from local js/lib folder
+            await loadScript('./js/lib/pdf.min.js');
+            alert("Trace 4.2: PDF Lib Loaded");
+
+            // Set Worker to Local
+            pdfjsLib.GlobalWorkerOptions.workerSrc = './js/lib/pdf.worker.min.js';
             loader.remove();
         } catch (e) {
-            loader.textContent = 'PDF 뷰어를 불러오는데 실패했습니다.';
-            console.error('PDF Load Error:', e);
+            alert("Trace 4 Error: Lib Load Failed - " + e.message);
+            loader.textContent = '라이브러리 로드 실패';
             return;
         }
     }
 
     // 2. Load PDF
+    alert("Trace 4.3: Get Doc " + pdfUrl);
     const loadingTask = pdfjsLib.getDocument(pdfUrl);
 
     const statusDiv = document.createElement('div');
-    statusDiv.style.padding = '20px';
     statusDiv.style.textAlign = 'center';
-    statusDiv.style.color = '#666';
-    statusDiv.textContent = '문서를 불러오는 중...';
+    statusDiv.textContent = '문서 여는 중...';
     container.appendChild(statusDiv);
 
     try {
         const pdf = await loadingTask.promise;
+        alert("Trace 4.4: Doc Loaded. Pages: " + pdf.numPages);
         statusDiv.remove();
 
         // 3. Render All Pages
         for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
-
-            const viewport = page.getViewport({ scale: 1.5 }); // proper scale for mobile
+            const viewport = page.getViewport({ scale: 1.5 });
 
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             canvas.height = viewport.height;
             canvas.width = viewport.width;
 
-            // CSS to make it fit width
+            // CSS
             canvas.style.width = '100%';
             canvas.style.height = 'auto';
             canvas.style.display = 'block';
-            canvas.style.marginBottom = '10px'; // Gap between pages
-            canvas.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)'; // Slight shadow
+            canvas.style.marginBottom = '10px';
 
             container.appendChild(canvas);
 
@@ -218,19 +221,68 @@ async function renderPdfViewer(container, pdfUrl) {
             await page.render(renderContext).promise;
         }
 
-    } catch (error) {
-        console.error('Error rendering PDF:', error);
-        statusDiv.textContent = 'PDF 파일을 여는 중 오류가 발생했습니다.';
+        alert("Trace 4.5: Render Done. Init Panzoom?");
 
-        // Fallback or retry button?
-        const retryBtn = document.createElement('button');
-        retryBtn.textContent = '다시 시도';
-        retryBtn.style.marginTop = '10px';
-        retryBtn.onclick = () => {
-            container.innerHTML = '';
-            renderPdfViewer(container, pdfUrl);
-        };
-        container.appendChild(retryBtn);
+        // 5. Initialize Panzoom (Check if exists, or load it)
+        if (!window.Panzoom) {
+            alert("Trace 5: Loading Panzoom Lib...");
+            try {
+                await loadScript('./js/lib/panzoom.min.js');
+                alert("Trace 5.1: Panzoom Lib Loaded");
+            } catch (e) {
+                alert("Trace 5 Error: Panzoom Load Failed");
+            }
+        }
+
+        if (window.Panzoom) {
+            alert("Trace 5.2: Init Panzoom Logic");
+            // Wrap canvases in a zoom container if not already? 
+            // Actually, Panzoom works best on a wrapper.
+            // Let's create a wrapper for better control
+            const zoomWrapper = document.createElement('div');
+            zoomWrapper.style.touchAction = 'none'; // Critical
+
+            // Move children (canvases) to wrapper
+            while (container.children.length > 0) {
+                zoomWrapper.appendChild(container.children[0]);
+            }
+            container.appendChild(zoomWrapper);
+
+            const panzoomInstance = Panzoom(zoomWrapper, {
+                maxScale: 4,
+                minScale: 1,
+                contain: 'outside',
+                startScale: 1
+            });
+            alert("Trace 6: Panzoom Success!");
+
+            // Controls (Simple)
+            const controls = document.createElement('div');
+            controls.style.position = 'fixed';
+            controls.style.bottom = '80px';
+            controls.style.right = '20px';
+            controls.style.zIndex = '9999';
+            controls.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <button id="z-in" style="width:50px;height:50px;background:rgba(0,0,0,0.7);color:white;border-radius:50%;border:none;font-size:24px;">+</button>
+                    <button id="z-out" style="width:50px;height:50px;background:rgba(0,0,0,0.7);color:white;border-radius:50%;border:none;font-size:24px;">-</button>
+                    <button id="z-reset" style="width:50px;height:50px;background:rgba(0,0,0,0.7);color:white;border-radius:50%;border:none;font-size:16px;">↺</button>
+                </div>
+            `;
+            container.appendChild(controls);
+
+            document.getElementById('z-in').onclick = (e) => { e.stopPropagation(); panzoomInstance.zoomIn(); };
+            document.getElementById('z-out').onclick = (e) => { e.stopPropagation(); panzoomInstance.zoomOut(); };
+            document.getElementById('z-reset').onclick = (e) => { e.stopPropagation(); panzoomInstance.reset(); };
+
+        } else {
+            alert("Trace 5 Error: Panzoom missing");
+        }
+
+    } catch (error) {
+        alert("Trace Error Final: " + error.message);
+        console.error(error);
+        statusDiv.textContent = '오류: ' + error.message;
     }
 }
 
