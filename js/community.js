@@ -11,13 +11,14 @@ const COMMUNITY_ITEMS = [
         id: 'cell_intro',
         image: 'assets/community_cell_info.png',
         detailImage: 'assets/community_cell_info.png',
-        pdf: 'assets/cell_intro.pdf'
+        pdf: 'assets/cell_intro1.pdf'
     },
     {
         id: 'placement',
         title: '셀 배정',
         image: 'assets/community_placement_v2.png',
-        detailImage: 'assets/community_placement_v2.png'
+        detailImage: 'assets/community_placement_v2.png',
+        pdf: 'assets/cell_intro2.pdf'
     },
     {
         id: 'officers',
