@@ -102,8 +102,12 @@ body {
 
 .header-logo {
   height: 2rem;
-  /* Adjusted to approximate the size of the previous "Jesus Community" text */
   width: auto;
+  /* Center the logo */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
   filter: invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
   /* White logo */
 
@@ -150,6 +154,11 @@ body {
   justify-content: center;
   opacity: 0.9;
   transition: opacity 0.2s;
+
+  /* Ensure it stays on the right even if logo is absolute */
+  margin-left: auto;
+  z-index: 1001;
+  /* Above logo if needed */
 }
 
 .header-back-btn:active {
