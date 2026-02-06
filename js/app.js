@@ -1,10 +1,10 @@
 
 
-import { renderHome } from './home.js?v=107';
-import { renderMeeting } from './meeting.js?v=107';
-import { renderFuneral } from './funeral.js?v=107';
-import { renderCommunity } from './community.js?v=107';
-import { renderVideoDetail } from './video_detail.js?v=107';
+import { renderHome } from './home.js?v=108';
+import { renderMeeting } from './meeting.js?v=108';
+import { renderFuneral } from './funeral.js?v=108';
+import { renderCommunity } from './community.js?v=108';
+import { renderVideoDetail } from './video_detail.js?v=108';
 import { hasProfile, renderSetupModal } from './profile.js';
 
 // State
@@ -144,6 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
             phase3.classList.add('hidden');
             // Reveal the app smoothly
             document.getElementById('app').classList.add('app-visible');
+
+            // Profile Check (User Personalization) - Triggered AFTER Splash Sequence
+            if (!hasProfile()) {
+                setTimeout(() => {
+                    renderSetupModal(() => {
+                        if (currentTab === 'home') switchTab('home');
+                    });
+                }, 500); // Slight delay for smooth transition
+            }
         };
         phase3.addEventListener('click', enterApp);
     }
@@ -179,13 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Profile Check (User Personalization)
-    if (!hasProfile()) {
-        // Show modal if no profile exists
-        renderSetupModal(() => {
-            // Callback after successful save - Reload Home to show Greeting
-            if (currentTab === 'home') {
-                switchTab('home');
-            }
-        });
+    // Callback after successful save - Reload Home to show Greeting
+    if (currentTab === 'home') {
+        switchTab('home');
+    }
+});
     }
 });
