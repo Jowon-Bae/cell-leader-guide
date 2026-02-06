@@ -133,7 +133,7 @@ function renderCommunityDetail(container, item) {
 
     if (item.pdf) {
         alert('Trace 3: Has PDF ' + item.pdf);
-        renderPdfViewer(content, item.pdf);
+        renderPdfViewer(content, item.pdf).catch(e => alert('Trace 4 Async Error: ' + e));
     } else {
         const detailImg = document.createElement('img');
         detailImg.src = item.detailImage;
@@ -153,6 +153,7 @@ function renderCommunityDetail(container, item) {
 
 // PDF Viewer Implementation
 async function renderPdfViewer(container, pdfUrl) {
+    alert("Trace 4: PDF Viewer Start");
     // 1. Check if pdf.js is loaded
     if (!window.pdfjsLib) {
         // Show loading spinner
