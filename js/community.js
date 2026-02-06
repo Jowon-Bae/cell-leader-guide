@@ -183,7 +183,7 @@ async function renderPdfViewer(container, pdfUrl) {
         // 3. Render All Pages
         for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: 3.0 }); // High quality for retina
+            const viewport = page.getViewport({ scale: 2.0 }); // Good quality, better perf
 
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -237,7 +237,7 @@ async function renderPdfViewer(container, pdfUrl) {
             const panzoomInstance = Panzoom(zoomWrapper, {
                 maxScale: 4,
                 minScale: 1,
-                contain: 'outside',
+                // contain: 'outside', // Removed to prevent "leaning"/locking
                 startScale: 1,
                 cursor: 'default'
             });
