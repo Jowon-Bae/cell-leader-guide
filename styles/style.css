@@ -73,18 +73,31 @@ body {
 }
 
 /* Header */
+/* Header */
 .header {
   background: url('../assets/background_card.jpeg') no-repeat center center / cover;
-  /* User requested to replace header with this image too */
   color: white;
-  padding: var(--spacing-md) var(--spacing-md);
-  /* Reduced padding for compact look */
+
+  /* Fixed Positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  /* High z-index to stay on top */
+
+  /* Safe Area Padding for Notch */
+  padding: var(--spacing-md);
+  padding-top: max(var(--spacing-md), env(safe-area-inset-top));
+
   box-shadow: var(--shadow-md);
-  z-index: 10;
   display: flex;
   justify-content: space-between;
-  /* Space out Logo and Back Button */
   align-items: center;
+  height: auto;
+  /* Allow height to grow with padding */
+  min-height: 80px;
+  /* Ensure minimum touch size including notch */
 }
 
 .header-logo {
@@ -124,6 +137,8 @@ body {
   padding: var(--spacing-md);
   padding-bottom: 80px;
   /* Space for navbar */
+  /* Space for Fixed Header (approx 80px + safe area) */
+  padding-top: 100px;
 }
 
 /* Animations using Keyframes */
