@@ -183,7 +183,7 @@ async function renderPdfViewer(container, pdfUrl) {
         // 3. Render All Pages
         for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: 1.5 });
+            const viewport = page.getViewport({ scale: 3.0 }); // High quality for retina
 
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -192,9 +192,11 @@ async function renderPdfViewer(container, pdfUrl) {
 
             // CSS
             canvas.style.width = '100%';
+            canvas.style.maxWidth = '1000px'; // Prevent too wide on desktop
             canvas.style.height = 'auto';
             canvas.style.display = 'block';
             canvas.style.marginBottom = '10px';
+            canvas.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
 
             container.appendChild(canvas);
 
@@ -219,6 +221,10 @@ async function renderPdfViewer(container, pdfUrl) {
             // Let's create a wrapper for better control
             const zoomWrapper = document.createElement('div');
             zoomWrapper.style.touchAction = 'none'; // Critical
+            zoomWrapper.style.display = 'flex';
+            zoomWrapper.style.flexDirection = 'column';
+            zoomWrapper.style.alignItems = 'center'; // Center content
+            zoomWrapper.style.width = '100%';
 
             // Move children (canvases) to wrapper
             while (container.children.length > 0) {
