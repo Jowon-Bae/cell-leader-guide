@@ -101,16 +101,18 @@ body {
 }
 
 .header-logo {
-  height: 1.4rem;
-  /* Reduced from 2rem as requested */
+  height: 1.15rem;
+  /* Reduced size as requested */
   width: auto;
   /* Center the logo */
   position: absolute;
   left: 50%;
+  bottom: 12px;
+  /* Positioned from bottom to sit lower in the header */
   transform: translateX(-50%);
 
-  filter: invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  /* White logo */
+  /* Removed invert(1) to show original white color */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 
   /* Shimmer Effect (Left to Right) */
   /* Base state is slightly dimmed (0.7 opacity via mask alpha), Shine is full opacity (1.0) */
