@@ -37,15 +37,14 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="styles/style.css?v=120">
+    <link rel="stylesheet" href="styles/style.css?v=121">
     <script>
         window.onerror = function (msg, url, line, col, error) {
-            // Provide a user-friendly alert with error details
-            alert("앱 오류 발생 (v114):\n" + msg + "\n" + url + ":" + line);
+            alert("Debug Error (v121):\n" + msg);
             return false;
         };
         window.addEventListener('unhandledrejection', function (event) {
-            alert("앱 오류 (Promise):\n" + event.reason);
+            alert("Debug Promise Error:\n" + event.reason);
         });
     </script>
 </head>
@@ -134,7 +133,7 @@
     </div>
 
     <!-- Application Script -->
-    <script type="module" src="js/app.js?v=120"></script>
+    <script type="module" src="js/app.js?v=121"></script>
 </body>
 
 </html>
