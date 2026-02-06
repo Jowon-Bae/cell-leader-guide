@@ -1,10 +1,11 @@
 
 
-import { renderHome } from './home.js?v=137';
-import { renderMeeting } from './meeting.js?v=137';
-import { renderFuneral } from './funeral.js?v=137';
-import { renderCommunity } from './community.js?v=137';
-import { renderVideoDetail } from './video_detail.js?v=137';
+import { renderHome } from './home.js?v=138';
+import { renderMeeting } from './meeting.js?v=138';
+import { renderFuneral } from './funeral.js?v=138';
+import { renderCommunity } from './community.js?v=138';
+import { renderVideoDetail } from './video_detail.js?v=138';
+import { renderSchedule } from './schedule.js?v=138';
 
 // State
 let currentTab = 'home';
@@ -36,6 +37,9 @@ function switchTab(tabId) {
             break;
         case 'funeral':
             renderFuneral(mainContent);
+            break;
+        case 'schedule':
+            renderSchedule(mainContent);
             break;
     }
 }
