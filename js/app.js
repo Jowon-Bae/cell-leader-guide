@@ -1,11 +1,11 @@
 
 
-import { renderHome } from './home.js?v=110';
-import { renderMeeting } from './meeting.js?v=110';
-import { renderFuneral } from './funeral.js?v=110';
-import { renderCommunity } from './community.js?v=110';
-import { renderVideoDetail } from './video_detail.js?v=110';
-import { hasProfile, renderSetupModal } from './profile.js';
+import { renderHome } from './home.js?v=111';
+import { renderMeeting } from './meeting.js?v=111';
+import { renderFuneral } from './funeral.js?v=111';
+import { renderCommunity } from './community.js?v=111';
+import { renderVideoDetail } from './video_detail.js?v=111';
+import { renderVideoDetail } from './video_detail.js?v=111';
 
 // State
 let currentTab = 'home';
@@ -145,14 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Reveal the app smoothly
             document.getElementById('app').classList.add('app-visible');
 
-            // Profile Check (User Personalization) - Triggered AFTER Splash Sequence
-            if (!hasProfile()) {
-                setTimeout(() => {
-                    renderSetupModal(() => {
-                        if (currentTab === 'home') switchTab('home');
-                    });
-                }, 500); // Slight delay for smooth transition
-            }
+
         };
         phase3.addEventListener('click', enterApp);
     }
