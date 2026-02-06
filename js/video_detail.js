@@ -85,9 +85,11 @@ export function renderVideoDetail(container, videoData, onBack) {
     descBox.innerHTML = videoData.description ? videoData.description : '내용이 없습니다.';
 
     // Style the content area to be paper-like for readability of black text
-    contentArea.style.backgroundColor = 'white';
+    contentArea.style.backgroundColor = '#ffffff';
     contentArea.style.borderRadius = '12px 12px 0 0'; // Round top corners
-    contentArea.style.color = 'black';
+    contentArea.style.color = '#000000';
+    contentArea.style.padding = '20px'; // Add more internal padding for the white box
+    contentArea.style.boxShadow = '0 -2px 10px rgba(0,0,0,0.1)'; // Slight shadow for depth
     wrapper.appendChild(contentArea);
 
     container.appendChild(wrapper);
