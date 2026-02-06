@@ -1,6 +1,9 @@
 
 export function renderVideoDetail(container, videoData, onBack) {
     const wrapper = document.createElement('div');
+    // DEBUG: Check if description exists
+    alert('Video Data Debug:\n' + JSON.stringify(videoData, null, 2));
+    console.log('Video Data:', videoData);
     wrapper.className = 'fade-in';
     wrapper.style.display = 'flex';
     wrapper.style.flexDirection = 'column';
