@@ -1,6 +1,12 @@
-// Basic Service Worker to enable PWA installation (v4)
+// Basic Service Worker to enable PWA installation (v110)
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install');
+    self.skipWaiting(); // Force activation
+});
+
+self.addEventListener('activate', (e) => {
+    console.log('[Service Worker] Activate');
+    e.waitUntil(self.clients.claim()); // Force control over clients
 });
 
 self.addEventListener('fetch', (e) => {
