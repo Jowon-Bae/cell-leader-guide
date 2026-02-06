@@ -63,7 +63,11 @@ export function renderCommunity(container) {
         imgContainer.appendChild(img);
         card.appendChild(imgContainer);
 
-        card.onclick = () => renderCommunityDetail(container, item);
+        // Click Event -> Detail View
+        card.onclick = () => {
+            // alert('Card Clicked!'); // Trace 1 
+            renderCommunityDetail(container, item);
+        };
 
         list.appendChild(card);
     });
@@ -73,6 +77,9 @@ export function renderCommunity(container) {
 }
 
 function renderCommunityDetail(container, item) {
+    // alert('Detailed View: ' + item.title); // Trace 2
+
+    // Clear Container
     container.innerHTML = '';
     container.scrollTop = 0;
 
@@ -125,6 +132,7 @@ function renderCommunityDetail(container, item) {
     content.style.background = '#f5f5f5'; // Light gray for PDF background
 
     if (item.pdf) {
+        // alert('Has PDF: ' + item.pdf); // Trace 3
         renderPdfViewer(content, item.pdf);
     } else {
         const detailImg = document.createElement('img');
