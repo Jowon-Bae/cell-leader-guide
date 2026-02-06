@@ -220,17 +220,30 @@ async function renderPdfViewer(container, pdfUrl) {
     }
 }
 
-// Helper to load script
+// Helper to load script with timeout
 function loadScript(src) {
     return new Promise((resolve, reject) => {
         if (document.querySelector(`script[src="${src}"]`)) {
             resolve();
             return;
         }
+
         const script = document.createElement('script');
         script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
+
+        const timeout = setTimeout(() => {
+            reject(new Error(`Timeout loading ${src}`));
+        }, 5000); // 5s timeout
+
+        script.onload = () => {
+            clearTimeout(timeout);
+            resolve();
+        };
+        script.onerror = (e) => {
+            clearTimeout(timeout);
+            reject(new Error(`Failed to load ${src}`));
+        };
+
         document.head.appendChild(script);
     });
 }
