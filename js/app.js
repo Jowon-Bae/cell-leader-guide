@@ -1,10 +1,10 @@
 
 
-import { renderHome } from './home.js?v=87';
-import { renderMeeting } from './meeting.js?v=87';
-import { renderFuneral } from './funeral.js?v=87';
-import { renderCommunity } from './community.js?v=87';
-import { renderVideoDetail } from './video_detail.js?v=87';
+import { renderHome } from './home.js?v=88';
+import { renderMeeting } from './meeting.js?v=88';
+import { renderFuneral } from './funeral.js?v=88';
+import { renderCommunity } from './community.js?v=88';
+import { renderVideoDetail } from './video_detail.js?v=88';
 
 // State
 let currentTab = 'home';
