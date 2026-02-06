@@ -1,6 +1,5 @@
 
 import { OATHS, FUNERAL_GUIDE, QUICK_LINKS } from './data.js';
-import { OATHS, FUNERAL_GUIDE, QUICK_LINKS } from './data.js';
 
 initInstallPrompt();
 
