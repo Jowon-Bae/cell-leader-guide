@@ -517,8 +517,8 @@ body {
 .loading-logo {
   width: 65px;
   height: auto;
-  margin-bottom: 80px;
-  /* Offset to match splash logo position (which has text below) */
+  margin-bottom: 60px;
+  /* Offset adjusted to match splash logo position */
   filter: invert(1);
   /* White logo */
   animation: logoSpin 2s ease-in-out forwards;
