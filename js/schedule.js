@@ -32,11 +32,13 @@ export function renderSchedule(container) {
     wrapper.style.padding = 'var(--spacing-md)';
     wrapper.style.paddingBottom = '100px';
 
-    const header = document.createElement('h2');
-    header.textContent = '사역 일정';
-    header.style.color = 'var(--primary-color)';
+    const header = document.createElement('img');
+    header.src = 'assets/church-events-1770370120198.png';
+    header.alt = 'Church Events';
+    header.style.width = '100%';
     header.style.marginBottom = 'var(--spacing-md)';
-    header.style.textAlign = 'center';
+    header.style.borderRadius = 'var(--radius-md)'; // Optional rounded corners
+    header.style.display = 'block'; // Ensure block display
     wrapper.appendChild(header);
 
     const list = document.createElement('div');
