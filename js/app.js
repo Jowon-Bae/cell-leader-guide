@@ -1,10 +1,10 @@
 
 
-import { renderHome } from './home.js?v=108';
-import { renderMeeting } from './meeting.js?v=108';
-import { renderFuneral } from './funeral.js?v=108';
-import { renderCommunity } from './community.js?v=108';
-import { renderVideoDetail } from './video_detail.js?v=108';
+import { renderHome } from './home.js?v=109';
+import { renderMeeting } from './meeting.js?v=109';
+import { renderFuneral } from './funeral.js?v=109';
+import { renderCommunity } from './community.js?v=109';
+import { renderVideoDetail } from './video_detail.js?v=109';
 import { hasProfile, renderSetupModal } from './profile.js';
 
 // State
@@ -185,13 +185,5 @@ document.addEventListener('DOMContentLoaded', () => {
         navigator.serviceWorker.register('./sw.js')
             .then(() => console.log('Service Worker Registered'))
             .catch(err => console.log('SW Registration Failed: ', err));
-    }
-
-    // Profile Check (User Personalization)
-    // Callback after successful save - Reload Home to show Greeting
-    if (currentTab === 'home') {
-        switchTab('home');
-    }
-});
     }
 });
