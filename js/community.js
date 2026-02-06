@@ -24,7 +24,8 @@ const COMMUNITY_ITEMS = [
         id: 'officers',
         title: '서울드림교회 임직자',
         image: 'assets/community_officers.png',
-        detailImage: 'assets/community_officers.png'
+        detailImage: 'assets/community_officers.png',
+        pdf: 'assets/cell_intro3.pdf'
     }
 ];
 
