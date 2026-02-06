@@ -1,7 +1,7 @@
 
 import { OATHS, FUNERAL_GUIDE, QUICK_LINKS } from './data.js';
 
-initInstallPrompt();
+
 
 export function renderHome(container, callbacks = {}) {
     const wrapper = document.createElement('div');
