@@ -65,7 +65,6 @@ export function renderCommunity(container) {
 
         // Click Event -> Detail View
         card.onclick = () => {
-            alert('Trace 1: Clicked');
             renderCommunityDetail(container, item);
         };
 
@@ -77,79 +76,71 @@ export function renderCommunity(container) {
 }
 
 function renderCommunityDetail(container, item) {
-    try {
-        // alert('Detailed View: ' + item.title); // Trace 2
+    // Clear Container
+    container.innerHTML = '';
+    container.scrollTop = 0;
 
-        // Clear Container
+    const wrapper = document.createElement('div');
+    wrapper.className = 'fade-in';
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'column';
+    wrapper.style.height = '100%';
+    wrapper.style.backgroundColor = 'var(--bg-color)';
+
+    // Header
+    const header = document.createElement('div');
+    header.style.padding = 'var(--spacing-md)';
+    header.style.display = 'flex';
+    header.style.alignItems = 'center';
+    header.style.background = 'white';
+    header.style.boxShadow = 'var(--shadow-sm)';
+    header.style.position = 'sticky';
+    header.style.top = '0';
+    header.style.zIndex = '10';
+
+    const backBtn = document.createElement('button');
+    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i>';
+    backBtn.style.background = 'none';
+    backBtn.style.border = 'none';
+    backBtn.style.color = 'var(--text-main)';
+    backBtn.style.fontSize = '1.2rem';
+    backBtn.style.marginRight = 'var(--spacing-md)';
+    backBtn.style.cursor = 'pointer';
+    backBtn.onclick = () => {
         container.innerHTML = '';
-        container.scrollTop = 0;
+        renderCommunity(container);
+    };
 
-        const wrapper = document.createElement('div');
-        wrapper.className = 'fade-in';
-        wrapper.style.display = 'flex';
-        wrapper.style.flexDirection = 'column';
-        wrapper.style.height = '100%';
-        wrapper.style.backgroundColor = 'var(--bg-color)';
+    const title = document.createElement('h3');
+    title.textContent = item.title;
+    title.style.margin = '0';
+    title.style.fontSize = '1.1rem';
+    title.style.flex = '1';
 
-        // Header
-        const header = document.createElement('div');
-        header.style.padding = 'var(--spacing-md)';
-        header.style.display = 'flex';
-        header.style.alignItems = 'center';
-        header.style.background = 'white';
-        header.style.boxShadow = 'var(--shadow-sm)';
-        header.style.position = 'sticky';
-        header.style.top = '0';
-        header.style.zIndex = '10';
+    header.appendChild(backBtn);
+    header.appendChild(title);
+    wrapper.appendChild(header);
 
-        const backBtn = document.createElement('button');
-        backBtn.innerHTML = '<i class="fas fa-arrow-left"></i>';
-        backBtn.style.background = 'none';
-        backBtn.style.border = 'none';
-        backBtn.style.color = 'var(--text-main)';
-        backBtn.style.fontSize = '1.2rem';
-        backBtn.style.marginRight = 'var(--spacing-md)';
-        backBtn.style.cursor = 'pointer';
-        backBtn.onclick = () => {
-            container.innerHTML = '';
-            renderCommunity(container);
-        };
+    // Content
+    const content = document.createElement('div');
+    content.style.flex = '1';
+    content.style.overflowY = 'auto';
+    content.style.padding = '0';
+    content.style.background = '#f5f5f5'; // Light gray for PDF background
 
-        const title = document.createElement('h3');
-        title.textContent = item.title;
-        title.style.margin = '0';
-        title.style.fontSize = '1.1rem';
-        title.style.flex = '1';
-
-        header.appendChild(backBtn);
-        header.appendChild(title);
-        wrapper.appendChild(header);
-
-        // Content
-        const content = document.createElement('div');
-        content.style.flex = '1';
-        content.style.overflowY = 'auto';
-        content.style.padding = '0';
-        content.style.background = '#f5f5f5'; // Light gray for PDF background
-
-        if (item.pdf) {
-            alert('Trace 3: Has PDF ' + item.pdf);
-            renderPdfViewer(content, item.pdf).catch(e => alert('Trace 4 Async Error: ' + e));
-        } else {
-            const detailImg = document.createElement('img');
-            detailImg.src = item.detailImage;
-            detailImg.style.width = '100%';
-            detailImg.style.height = 'auto';
-            detailImg.style.display = 'block';
-            content.appendChild(detailImg);
-        }
-
-        wrapper.appendChild(content);
-        container.appendChild(wrapper);
-    } catch (e) {
-        alert('Trace 2 Error: ' + e.message);
-        console.error(e);
+    if (item.pdf) {
+        renderPdfViewer(content, item.pdf);
+    } else {
+        const detailImg = document.createElement('img');
+        detailImg.src = item.detailImage;
+        detailImg.style.width = '100%';
+        detailImg.style.height = 'auto';
+        detailImg.style.display = 'block';
+        content.appendChild(detailImg);
     }
+
+    wrapper.appendChild(content);
+    container.appendChild(wrapper);
 }
 
 // PDF Viewer Implementation
