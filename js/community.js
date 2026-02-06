@@ -197,6 +197,8 @@ async function renderPdfViewer(container, pdfUrl) {
             canvas.style.display = 'block';
             canvas.style.marginBottom = '10px';
             canvas.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            canvas.style.marginLeft = 'auto'; // Robust centering
+            canvas.style.marginRight = 'auto'; // Robust centering
 
             container.appendChild(canvas);
 
@@ -225,6 +227,7 @@ async function renderPdfViewer(container, pdfUrl) {
             zoomWrapper.style.flexDirection = 'column';
             zoomWrapper.style.alignItems = 'center'; // Center content
             zoomWrapper.style.width = '100%';
+            zoomWrapper.style.margin = '0 auto'; // Robust centering of wrapper itself
 
             // Move children (canvases) to wrapper
             while (container.children.length > 0) {
