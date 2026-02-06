@@ -1,10 +1,11 @@
 
 
-import { renderHome } from './home.js?v=106';
-import { renderMeeting } from './meeting.js?v=106';
-import { renderFuneral } from './funeral.js?v=106';
-import { renderCommunity } from './community.js?v=106';
-import { renderVideoDetail } from './video_detail.js?v=106';
+import { renderHome } from './home.js?v=107';
+import { renderMeeting } from './meeting.js?v=107';
+import { renderFuneral } from './funeral.js?v=107';
+import { renderCommunity } from './community.js?v=107';
+import { renderVideoDetail } from './video_detail.js?v=107';
+import { hasProfile, renderSetupModal } from './profile.js';
 
 // State
 let currentTab = 'home';
@@ -175,5 +176,16 @@ document.addEventListener('DOMContentLoaded', () => {
         navigator.serviceWorker.register('./sw.js')
             .then(() => console.log('Service Worker Registered'))
             .catch(err => console.log('SW Registration Failed: ', err));
+    }
+
+    // Profile Check (User Personalization)
+    if (!hasProfile()) {
+        // Show modal if no profile exists
+        renderSetupModal(() => {
+            // Callback after successful save - Reload Home to show Greeting
+            if (currentTab === 'home') {
+                switchTab('home');
+            }
+        });
     }
 });

@@ -1,12 +1,24 @@
 
 import { OATHS, FUNERAL_GUIDE, QUICK_LINKS } from './data.js';
-import { initInstallPrompt } from './install_prompt.js';
+import { getUserProfile } from './profile.js';
 
 initInstallPrompt();
 
 export function renderHome(container, callbacks = {}) {
     const wrapper = document.createElement('div');
     wrapper.className = 'fade-in';
+
+    // 0. Greeting Card (Personalization)
+    const profile = getUserProfile();
+    if (profile && profile.name) {
+        const greetingCard = document.createElement('div');
+        greetingCard.className = 'home-greeting-card fade-in';
+        greetingCard.innerHTML = `
+            <div class="greeting-text">반갑습니다, <span class="highlight-name">${profile.name}</span> 셀장님!</div>
+            ${profile.cellName ? `<div class="greeting-subtext">${profile.cellName}</div>` : ''}
+        `;
+        wrapper.appendChild(greetingCard);
+    }
 
     // 1. Helper: Create Auto-Playing Slider
     function createSlider(items, intervalTime = 5000) {
