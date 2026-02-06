@@ -9,10 +9,9 @@ const COMMUNITY_ITEMS = [
     },
     {
         id: 'cell_intro',
-        title: '셀이란?',
         image: 'assets/community_cell_info.png',
         detailImage: 'assets/community_cell_info.png',
-        pdf: 'assets/셀이란.pdf'
+        pdf: 'assets/cell_intro.pdf'
     },
     {
         id: 'placement',
@@ -211,7 +210,11 @@ async function renderPdfViewer(container, pdfUrl) {
         // Fallback or retry button?
         const retryBtn = document.createElement('button');
         retryBtn.textContent = '다시 시도';
-        retryBtn.onclick = () => renderPdfViewer(container, pdfUrl);
+        retryBtn.style.marginTop = '10px';
+        retryBtn.onclick = () => {
+            container.innerHTML = '';
+            renderPdfViewer(container, pdfUrl);
+        };
         container.appendChild(retryBtn);
     }
 }
