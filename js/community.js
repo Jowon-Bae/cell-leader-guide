@@ -194,7 +194,7 @@ async function renderPdfViewer(container, pdfUrl) {
             canvas.style.width = '100%';
             canvas.style.maxWidth = '1000px'; // Prevent too wide on desktop
             canvas.style.height = 'auto';
-            canvas.style.display = 'block';
+            canvas.style.display = 'block'; // Block behavior for margin auto
             canvas.style.marginBottom = '10px';
             canvas.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
             canvas.style.marginLeft = 'auto'; // Robust centering
@@ -223,9 +223,8 @@ async function renderPdfViewer(container, pdfUrl) {
             // Let's create a wrapper for better control
             const zoomWrapper = document.createElement('div');
             zoomWrapper.style.touchAction = 'none'; // Critical
-            zoomWrapper.style.display = 'flex';
-            zoomWrapper.style.flexDirection = 'column';
-            zoomWrapper.style.alignItems = 'center'; // Center content
+            zoomWrapper.style.display = 'block'; // Changed to Block
+            zoomWrapper.style.textAlign = 'center'; // Center children
             zoomWrapper.style.width = '100%';
             zoomWrapper.style.margin = '0 auto'; // Robust centering of wrapper itself
 
@@ -239,7 +238,8 @@ async function renderPdfViewer(container, pdfUrl) {
                 maxScale: 4,
                 minScale: 1,
                 contain: 'outside',
-                startScale: 1
+                startScale: 1,
+                cursor: 'default'
             });
 
             // Controls (Simple)
