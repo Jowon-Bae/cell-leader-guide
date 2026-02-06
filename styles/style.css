@@ -113,7 +113,8 @@ body {
   -webkit-mask-size: 200% 100%;
   mask-image: linear-gradient(120deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%);
   mask-size: 200% 100%;
-  animation: shine 3s infinite linear;
+  animation: shine 6s infinite ease-in-out;
+  /* Slowed to 6s, added ease-in-out for softness */
 }
 
 @keyframes shine {
@@ -122,9 +123,16 @@ body {
     mask-position: -150% 0;
   }
 
+  /* Shine finishes passing by around 50-60% of the timeline */
+  60% {
+    -webkit-mask-position: 200% 0;
+    mask-position: 200% 0;
+  }
+
+  /* Stay off-screen for the remaining time to create a "Pause" */
   100% {
-    -webkit-mask-position: 150% 0;
-    mask-position: 150% 0;
+    -webkit-mask-position: 200% 0;
+    mask-position: 200% 0;
   }
 }
 
