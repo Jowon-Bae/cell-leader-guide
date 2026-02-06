@@ -145,6 +145,10 @@ function renderCommunityDetail(container, item) {
 
     wrapper.appendChild(content);
     container.appendChild(wrapper);
+} catch (e) {
+    alert('Trace 2 Error: ' + e.message);
+    console.error(e);
+}
 }
 
 // PDF Viewer Implementation
