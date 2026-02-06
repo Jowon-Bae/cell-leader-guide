@@ -106,22 +106,21 @@ body {
   width: auto;
   filter: invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
   /* White logo */
-  animation: twinkle 3s infinite ease-in-out;
+
+  /* Shimmer Effect (Left to Right) */
+  /* Base state is slightly dimmed (0.7 opacity via mask alpha), Shine is full opacity (1.0) */
+  -webkit-mask-image: linear-gradient(120deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%);
+  -webkit-mask-size: 200% 100%;
+  animation: shine 3s infinite linear;
 }
 
-@keyframes twinkle {
-
-  0%,
-  100% {
-    opacity: 0.7;
-    transform: scale(0.98);
+@keyframes shine {
+  0% {
+    -webkit-mask-position: -150% 0;
   }
 
-  50% {
-    opacity: 1;
-    transform: scale(1.02);
-    filter: invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-    /* Glow effect */
+  100% {
+    -webkit-mask-position: 150% 0;
   }
 }
 
