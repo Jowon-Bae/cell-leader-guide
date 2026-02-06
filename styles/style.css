@@ -101,7 +101,8 @@ body {
 }
 
 .header-logo {
-  height: 2rem;
+  height: 1.4rem;
+  /* Reduced from 2rem as requested */
   width: auto;
   /* Center the logo */
   position: absolute;
