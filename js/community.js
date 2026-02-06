@@ -65,7 +65,7 @@ export function renderCommunity(container) {
 
         // Click Event -> Detail View
         card.onclick = () => {
-            // alert('Card Clicked!'); // Trace 1 
+            alert('Trace 1: Clicked');
             renderCommunityDetail(container, item);
         };
 
@@ -132,7 +132,7 @@ function renderCommunityDetail(container, item) {
     content.style.background = '#f5f5f5'; // Light gray for PDF background
 
     if (item.pdf) {
-        // alert('Has PDF: ' + item.pdf); // Trace 3
+        alert('Trace 3: Has PDF ' + item.pdf);
         renderPdfViewer(content, item.pdf);
     } else {
         const detailImg = document.createElement('img');
