@@ -35,12 +35,7 @@ export function renderCommunity(container) {
     wrapper.style.overflowY = 'auto';
 
     // Title
-    const headerTitle = document.createElement('h2');
-    headerTitle.textContent = '공동체';
-    headerTitle.style.color = 'var(--primary-dark)';
-    headerTitle.style.marginBottom = 'var(--spacing-lg)';
-    headerTitle.style.textAlign = 'center';
-    wrapper.appendChild(headerTitle);
+    // Title Removed as per request
 
     // List Container
     const list = document.createElement('div');
