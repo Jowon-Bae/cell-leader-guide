@@ -222,20 +222,28 @@ export function renderHome(container, callbacks = {}) {
         const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
 
         if (isAndroid) {
-            window.location.href = 'intent://start/#Intent;scheme=dimodesmart;package=kr.co.dimode.smart;end';
-            // Fallback to Play Store if not installed
-            setTimeout(() => {
-                window.location.href = 'https://play.google.com/store/search?q=DimodeSmart&c=apps';
-            }, 500);
+            // Correct Package Name found: com.dimode.timothy_smart
+            const package_name = 'com.dimode.timothy_smart';
+
+            // Intent for launching via package name
+            // 'launch' scheme is often used or just package
+            window.location.href = `intent://start#Intent;scheme=android-app;package=${package_name};S.browser_fallback_url=https://play.google.com/store/apps/details?id=${package_name};end`;
         } else if (isIOS) {
-            window.location.href = 'dimodesmart://';
-            // Fallback to App Store
+            // iOS Guesses based on "Timothy" internal name
+            // 1. timothy://
+            // 2. timothysmart://
+
+            // Try 'timothy://'
+            window.location.href = 'timothy://';
+
             setTimeout(() => {
-                window.location.href = 'https://apps.apple.com/kr/app/dimodesmart/id123456789'; // Using Search Query as backup if ID fails
-                // Better fallback: Search URL
+                // Secondary guess
+                window.location.href = 'dimode://';
+
                 setTimeout(() => {
-                    window.location.href = 'https://apps.apple.com/kr/search?term=DimodeSmart';
-                }, 100);
+                    // Fallback to Search
+                    window.location.href = 'https://apps.apple.com/kr/search?term=%EB%94%94%EB%AA%A8%EB%8D%B0+%EC%8A%A4%EB%A7%88%ED%8A%B8+%EC%84%B1%EB%8F%84%EC%95%B1';
+                }, 1000);
             }, 500);
         } else {
             // Desktop/Web
