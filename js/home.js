@@ -229,40 +229,27 @@ export function renderHome(container, callbacks = {}) {
             // 'launch' scheme is often used or just package
             window.location.href = `intent://start#Intent;scheme=android-app;package=${package_name};S.browser_fallback_url=https://play.google.com/store/apps/details?id=${package_name};end`;
         } else if (isIOS) {
-            // iOS: Try a list of probable schemes for Stephen Information apps
-            const schemes = [
-                'dimode://',
-                'dimodesmart://',
-                'timothy://',
-                'timothysmart://',
-                'smartcradle://', // Common for their other apps
-                'jbch://', // Just in case
-                'dimodemember://'
-            ];
+            // iOS: Try 'dimode://' and 'timothy://' then ask user
+            const start = Date.now();
 
-            let index = 0;
+            // 1. Try generic 'dimode://'
+            window.location.href = 'dimode://';
 
-            function tryNextScheme() {
-                if (index >= schemes.length) {
-                    // All failed, open App Store Product Page
-                    window.location.href = 'https://apps.apple.com/kr/app/id1454593741';
-                    return;
-                }
+            setTimeout(() => {
+                if (Date.now() - start > 1000) return; // App opened
 
-                const scheme = schemes[index];
-                index++;
+                // 2. Try 'timothy://'
+                window.location.href = 'timothy://';
 
-                // Try opening scheme
-                window.location.href = scheme;
-
-                // If specific scheme fails (or takes too long), try next
-                // Note: This is "best effort" as iOS doesn't give clean callbacks for deep link failure
                 setTimeout(() => {
-                    tryNextScheme();
-                }, 500);
-            }
+                    if (Date.now() - start > 2000) return; // App opened
 
-            tryNextScheme();
+                    // 3. If neither worked, ask the user
+                    if (confirm("앱을 자동으로 열 수 없습니다.\n앱스토어로 이동하시겠습니까?")) {
+                        window.location.href = 'https://apps.apple.com/kr/app/id1454593741';
+                    }
+                }, 1000);
+            }, 1000);
         } else {
             // Desktop/Web
             window.open('http://www.dimode.co.kr', '_blank');
