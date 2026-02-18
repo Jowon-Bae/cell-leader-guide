@@ -229,22 +229,40 @@ export function renderHome(container, callbacks = {}) {
             // 'launch' scheme is often used or just package
             window.location.href = `intent://start#Intent;scheme=android-app;package=${package_name};S.browser_fallback_url=https://play.google.com/store/apps/details?id=${package_name};end`;
         } else if (isIOS) {
-            // iOS Guesses based on "Timothy" internal name
-            // 1. timothy://
-            // 2. timothysmart://
+            // iOS: Try a list of probable schemes for Stephen Information apps
+            const schemes = [
+                'dimode://',
+                'dimodesmart://',
+                'timothy://',
+                'timothysmart://',
+                'smartcradle://', // Common for their other apps
+                'jbch://', // Just in case
+                'dimodemember://'
+            ];
 
-            // Try 'timothy://'
-            window.location.href = 'timothy://';
+            let index = 0;
 
-            setTimeout(() => {
-                // Secondary guess
-                window.location.href = 'dimode://';
+            function tryNextScheme() {
+                if (index >= schemes.length) {
+                    // All failed, open App Store Product Page
+                    window.location.href = 'https://apps.apple.com/kr/app/id1454593741';
+                    return;
+                }
 
+                const scheme = schemes[index];
+                index++;
+
+                // Try opening scheme
+                window.location.href = scheme;
+
+                // If specific scheme fails (or takes too long), try next
+                // Note: This is "best effort" as iOS doesn't give clean callbacks for deep link failure
                 setTimeout(() => {
-                    // Fallback to Search
-                    window.location.href = 'https://apps.apple.com/kr/search?term=%EB%94%94%EB%AA%A8%EB%8D%B0+%EC%8A%A4%EB%A7%88%ED%8A%B8+%EC%84%B1%EB%8F%84%EC%95%B1';
-                }, 1000);
-            }, 500);
+                    tryNextScheme();
+                }, 500);
+            }
+
+            tryNextScheme();
         } else {
             // Desktop/Web
             window.open('http://www.dimode.co.kr', '_blank');
