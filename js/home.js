@@ -181,6 +181,70 @@ export function renderHome(container, callbacks = {}) {
     worshipSection.appendChild(worshipLink);
     wrapper.appendChild(worshipSection);
 
+    // 6. Church Member App Link
+    const appLinkBtn = document.createElement('div');
+    appLinkBtn.className = 'card'; // Use card style for robust look
+    appLinkBtn.style.padding = 'var(--spacing-md)';
+    appLinkBtn.style.display = 'flex';
+    appLinkBtn.style.alignItems = 'center';
+    appLinkBtn.style.justifyContent = 'space-between';
+    appLinkBtn.style.cursor = 'pointer';
+    appLinkBtn.style.background = '#005f69'; // Teal color from icon
+    appLinkBtn.style.color = 'white';
+
+    // Icon
+    const appIcon = document.createElement('img');
+    appIcon.src = 'assets/dimode_icon_clean_1771454049363.png'; // Generated icon
+    appIcon.style.width = '48px';
+    appIcon.style.height = '48px';
+    appIcon.style.borderRadius = '12px';
+    appIcon.style.marginRight = '16px';
+
+    // Text
+    const appText = document.createElement('div');
+    appText.style.flex = '1';
+    appText.innerHTML = `
+        <div style="font-weight:bold; font-size:1.1rem; margin-bottom:4px;">서울드림교회 교인증</div>
+        <div style="font-size:0.9rem; opacity:0.9;">DimodeSmart 앱 실행</div>
+    `;
+
+    // Arrow
+    const arrow = document.createElement('i');
+    arrow.className = 'fas fa-chevron-right';
+
+    appLinkBtn.appendChild(appIcon);
+    appLinkBtn.appendChild(appText);
+    appLinkBtn.appendChild(arrow);
+
+    appLinkBtn.onclick = () => {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const isAndroid = /android/i.test(userAgent);
+        const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+
+        if (isAndroid) {
+            window.location.href = 'intent://start/#Intent;scheme=dimodesmart;package=kr.co.dimode.smart;end';
+            // Fallback to Play Store if not installed
+            setTimeout(() => {
+                window.location.href = 'https://play.google.com/store/search?q=DimodeSmart&c=apps';
+            }, 500);
+        } else if (isIOS) {
+            window.location.href = 'dimodesmart://';
+            // Fallback to App Store
+            setTimeout(() => {
+                window.location.href = 'https://apps.apple.com/kr/app/dimodesmart/id123456789'; // Using Search Query as backup if ID fails
+                // Better fallback: Search URL
+                setTimeout(() => {
+                    window.location.href = 'https://apps.apple.com/kr/search?term=DimodeSmart';
+                }, 100);
+            }, 500);
+        } else {
+            // Desktop/Web
+            window.open('http://www.dimode.co.kr', '_blank');
+        }
+    };
+
+    wrapper.appendChild(appLinkBtn);
+
     // 5. Greeting removed as per request
     // const greeting = document.createElement('div'); ...
 
