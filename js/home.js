@@ -194,7 +194,7 @@ export function renderHome(container, callbacks = {}) {
 
     // Icon
     const appIcon = document.createElement('img');
-    appIcon.src = 'assets/dimode_icon_clean_1771454049363.png'; // Generated icon
+    appIcon.src = 'assets/dimode_icon.png'; // Corrected Path
     appIcon.style.width = '48px';
     appIcon.style.height = '48px';
     appIcon.style.borderRadius = '12px';
