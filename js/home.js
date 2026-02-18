@@ -229,27 +229,11 @@ export function renderHome(container, callbacks = {}) {
             // 'launch' scheme is often used or just package
             window.location.href = `intent://start#Intent;scheme=android-app;package=${package_name};S.browser_fallback_url=https://play.google.com/store/apps/details?id=${package_name};end`;
         } else if (isIOS) {
-            // iOS: Try 'dimode://' and 'timothy://' then ask user
-            const start = Date.now();
-
-            // 1. Try generic 'dimode://'
-            window.location.href = 'dimode://';
-
-            setTimeout(() => {
-                if (Date.now() - start > 1000) return; // App opened
-
-                // 2. Try 'timothy://'
-                window.location.href = 'timothy://';
-
-                setTimeout(() => {
-                    if (Date.now() - start > 2000) return; // App opened
-
-                    // 3. If neither worked, ask the user
-                    if (confirm("앱을 자동으로 열 수 없습니다.\n앱스토어로 이동하시겠습니까?")) {
-                        window.location.href = 'https://apps.apple.com/kr/app/id1454593741';
-                    }
-                }, 1000);
-            }, 1000);
+            // iOS: Direct to App Store
+            // Since custom schemes (dimode:// etc) trigger "Invalid Address" errors,
+            // and the app is installed, the App Store page will show "OPEN".
+            // This is the safest, error-free UX.
+            window.location.href = 'https://apps.apple.com/kr/app/id1454593741';
         } else {
             // Desktop/Web
             window.open('http://www.dimode.co.kr', '_blank');
