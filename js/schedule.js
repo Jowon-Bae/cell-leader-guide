@@ -153,16 +153,16 @@ function addToCalendar(item) {
         'END:VCALENDAR'
     ].join('\r\n'); // Standard line ending
 
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const file = new File([icsContent], `${item.title}.ics`, { type: 'text/calendar' });
 
-    // iOS Safari workaround
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS) {
-        // Encode to base64 to avoid URI parsing issues on Safari
-        const base64Data = btoa(unescape(encodeURIComponent(icsContent)));
-        window.location.href = "data:text/calendar;charset=utf-8;base64," + base64Data;
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({
+            files: [file],
+            title: item.title,
+        }).catch(err => console.error('Error sharing:', err));
     } else {
+        // Fallback for desktop / unsupported browsers
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.setAttribute('download', `${item.title}.ics`);
