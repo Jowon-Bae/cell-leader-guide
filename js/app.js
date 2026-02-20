@@ -1,11 +1,11 @@
 
 
-import { renderHome } from './home.js?v=149';
-import { renderMeeting } from './meeting.js?v=149';
-import { renderFuneral } from './funeral.js?v=149';
-import { renderCommunity } from './community.js?v=149';
-import { renderVideoDetail } from './video_detail.js?v=149';
-import { renderSchedule } from './schedule.js?v=149';
+import { renderHome } from './home.js?v=150';
+import { renderMeeting } from './meeting.js?v=150';
+import { renderFuneral } from './funeral.js?v=150';
+import { renderCommunity } from './community.js?v=150';
+import { renderVideoDetail } from './video_detail.js?v=150';
+import { renderSchedule } from './schedule.js?v=150';
 
 // State
 let currentTab = 'home';
@@ -200,12 +200,12 @@ function showLoginModal() {
             <h2 style="margin-bottom: var(--spacing-sm); color: var(--primary-color);">환영합니다</h2>
             <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: var(--spacing-lg);">
                 셀장 가이드 앱에 오신 것을 환영합니다.<br>
-                본인 인증을 위해 아래 정보를 입력해주세요.
+                등록된 셀장(교역자)만 이용 가능합니다.
             </p>
             
             <div style="text-align: left; margin-bottom: var(--spacing-sm);">
                 <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">이름 *</label>
-                <input type="text" id="login-name" placeholder="홍길동" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                <input type="text" id="login-name" placeholder="실명을 입력하세요 (예: 홍길동)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
             </div>
             
             <div style="text-align: left; margin-bottom: var(--spacing-sm);">

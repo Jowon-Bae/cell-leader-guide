@@ -3,6 +3,11 @@
 // The shared community password
 const AUTH_CODE = 'dream2026';
 
+// List of allowed users
+const ALLOWED_NAMES = [
+    '김여호수아', '신도배', '배주원', '이상호', '김강림', '문현철', '곽은주'
+];
+
 export const ProfileManager = {
     // Current user state
     user: null,
@@ -19,6 +24,13 @@ export const ProfileManager = {
                     this.clearProfile();
                     return false;
                 }
+
+                // Extra security: if they somehow logged in before with a bad name, kick them out
+                if (!ALLOWED_NAMES.includes(this.user.name)) {
+                    this.clearProfile();
+                    return false;
+                }
+
                 return true;
             } catch (e) {
                 console.error("Profile parsing error", e);
@@ -31,12 +43,18 @@ export const ProfileManager = {
 
     // Save profile with authentication flag
     saveProfile(name, cellName, inputCode) {
-        if (inputCode !== AUTH_CODE) {
-            return { success: false, message: '비밀번호가 일치하지 않습니다.' };
-        }
-
         if (!name || name.trim() === '') {
             return { success: false, message: '이름을 입력해주세요.' };
+        }
+
+        const cleanName = name.trim();
+
+        if (!ALLOWED_NAMES.includes(cleanName)) {
+            return { success: false, message: '등록되지 않은 사용자입니다. (이름을 확인해주세요)' };
+        }
+
+        if (inputCode !== AUTH_CODE) {
+            return { success: false, message: '비밀번호가 일치하지 않습니다.' };
         }
 
         this.user = {
