@@ -123,12 +123,21 @@ export function renderSchedule(container) {
 
 // Helper: Generate .ics file and trigger download
 function addToCalendar(item) {
+    // Handle non-standard time strings (e.g. "주일 예배", "해당 주간")
+    let timeStr = item.time;
+    if (!/^\d{2}:\d{2}$/.test(timeStr)) {
+        timeStr = '09:00'; // Default to 09:00 AM if no exact time is provided
+    }
+
     // Format Date: YYYYMMDDTHHMMSS
-    const startStr = item.date.replace(/-/g, '') + 'T' + item.time.replace(/:/g, '') + '00';
+    const startStr = item.date.replace(/-/g, '') + 'T' + timeStr.replace(/:/g, '') + '00';
 
     // End Date (Assume 2 hours duration for simplicity)
-    // Parse to add hours
-    const d = new Date(`${item.date}T${item.time}:00`);
+    const d = new Date(`${item.date}T${timeStr}:00`);
+    if (isNaN(d.getTime())) {
+        alert("일정 날짜 오류로 캘린더에 추가할 수 없습니다.");
+        return;
+    }
     d.setHours(d.getHours() + 2);
 
     const endYear = d.getFullYear();
@@ -161,14 +170,17 @@ function addToCalendar(item) {
         'END:VCALENDAR'
     ].join('\r\n'); // Standard line ending
 
+    const file = new File([icsContent], `${item.title}.ics`, { type: 'text/calendar' });
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-    if (isIOS) {
-        // Convert to base64 Data URI to avoid parsing errors
-        const base64Data = btoa(unescape(encodeURIComponent(icsContent)));
-        const dataUri = `data:text/calendar;charset=utf-8;base64,${base64Data}`;
-        window.location.assign(dataUri);
+    if (isIOS && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        // Native iOS Share Sheet handles .ics Files beautifully IF the data is perfectly valid
+        navigator.share({
+            files: [file],
+            title: item.title,
+        }).catch(err => console.error('Error sharing:', err));
     } else {
+        // Desktop / Android fallback
         const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
