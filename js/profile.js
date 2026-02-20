@@ -14,7 +14,7 @@ export const ProfileManager = {
 
     // Initialize - check if user is logged in
     init() {
-        const savedProfile = localStorage.getItem('sd_cell_leader_profile');
+        const savedProfile = sessionStorage.getItem('sd_cell_leader_profile');
         if (savedProfile) {
             try {
                 this.user = JSON.parse(savedProfile);
@@ -64,7 +64,7 @@ export const ProfileManager = {
             setupDate: new Date().toISOString()
         };
 
-        localStorage.setItem('sd_cell_leader_profile', JSON.stringify(this.user));
+        sessionStorage.setItem('sd_cell_leader_profile', JSON.stringify(this.user));
         return { success: true };
     },
 
@@ -76,7 +76,7 @@ export const ProfileManager = {
     // Clear profile (Logout)
     clearProfile() {
         this.user = null;
-        localStorage.removeItem('sd_cell_leader_profile');
+        sessionStorage.removeItem('sd_cell_leader_profile');
     },
 
     // Check if user is authenticated
