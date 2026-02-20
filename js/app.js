@@ -69,7 +69,7 @@ navItems.forEach(item => {
 // Initial Render
 document.addEventListener('DOMContentLoaded', () => {
     // 0. Check Auth First
-    const isAuth = ProfileManager.init();
+    let isAuth = ProfileManager.init();
 
     if (!isAuth) {
         document.getElementById('app').style.display = 'none';
@@ -133,42 +133,52 @@ document.addEventListener('DOMContentLoaded', () => {
         trigger.addEventListener('touchstart', toPhase2, { passive: true });
     }
 
-    // Step 2: Click Phase 2 -> Go to Phase 3
+    // Step 2: Click Phase 2 -> Auth Check -> Go to Phase 3
     if (phase2) {
-        const toPhase3 = () => {
-            if (phase3) {
-                // Prepare Phase 3 behind Phase 2
-                phase3.style.transition = 'none';
-                phase3.classList.remove('hidden');
-                setTimeout(() => { phase3.style.transition = ''; }, 50);
-            }
+        const processPhase2 = () => {
             phase2.classList.add('hidden');
             setTimeout(() => { phase2.remove(); }, 1000);
-        };
-        phase2.addEventListener('click', toPhase3);
-    }
-
-    // Step 3: Click Phase 3 -> Go to App OR Login
-    if (phase3) {
-        const enterApp = () => {
-            phase3.classList.add('hidden');
 
             if (!isAuth) {
-                showLoginModal();
+                showLoginModal(() => {
+                    isAuth = true; // Update local state
+                    showPhase3();  // Show guidelines after login
+                });
             } else {
-                document.getElementById('app').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('app').classList.add('app-visible');
-                }, 50);
+                showPhase3();      // Already logged in, straight to guidelines
             }
         };
+        phase2.addEventListener('click', processPhase2);
+    }
+
+    // Helper to show Phase 3
+    function showPhase3() {
+        if (phase3) {
+            phase3.style.transition = 'none';
+            phase3.classList.remove('hidden');
+            setTimeout(() => { phase3.style.transition = ''; }, 50);
+        } else {
+            enterApp();
+        }
+    }
+
+    // Step 3: Enter App Logic
+    const enterApp = () => {
+        if (phase3) phase3.classList.add('hidden');
+        document.getElementById('app').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('app').classList.add('app-visible');
+            // Re-render home to show personalized greeting if we hit home first
+            if (currentTab === 'home') switchTab('home');
+        }, 50);
+    };
+
+    if (phase3) {
         phase3.addEventListener('click', enterApp);
     } else if (!isAuth) {
-        // Fallback if Phase 3 doesn't exist for some reason
-        showLoginModal();
+        showLoginModal(() => { enterApp(); });
     } else {
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('app').classList.add('app-visible');
+        enterApp();
     }
 
     // Back Button Logic
