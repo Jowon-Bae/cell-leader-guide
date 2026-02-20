@@ -139,11 +139,19 @@ function addToCalendar(item) {
 
     const endStr = `${endYear}${endMonth}${endDay}T${endHour}${endMin}00`;
 
+    // REQUIRED for Apple Calendar: UID and DTSTAMP. 
+    // Without these, iOS silently rejects the ICS file and fails to show the Add to Calendar prompt.
+    const dtstamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const uid = `${Date.now()}-${item.id}@seouldream.org`;
+
     const icsContent = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
         'PRODID:-//SeoulDreamChurch//CellLeaderGuide//KO',
+        'CALSCALE:GREGORIAN',
         'BEGIN:VEVENT',
+        `UID:${uid}`,
+        `DTSTAMP:${dtstamp}`,
         `SUMMARY:${item.title}`,
         `DTSTART:${startStr}`,
         `DTEND:${endStr}`,
@@ -153,23 +161,20 @@ function addToCalendar(item) {
         'END:VCALENDAR'
     ].join('\r\n'); // Standard line ending
 
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-
-    // iOS Safari workaround: Remove 'download' attribute.
-    // Safari treats blob downloads as generic files or blocks them.
-    // By omitting 'download' and using target='_blank', Safari navigates to the 
-    // text/calendar Blob and natively hands it off to the Calendar app.
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-        link.target = '_blank';
+        // Convert to base64 Data URI to avoid parsing errors
+        const base64Data = btoa(unescape(encodeURIComponent(icsContent)));
+        const dataUri = `data:text/calendar;charset=utf-8;base64,${base64Data}`;
+        window.location.assign(dataUri);
     } else {
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
         link.setAttribute('download', `${item.title}.ics`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
 }
