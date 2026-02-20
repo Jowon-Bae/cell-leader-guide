@@ -12,6 +12,7 @@ export function renderHome(container, callbacks = {}) {
     const headerSection = document.createElement('div');
     headerSection.className = 'home-header-section';
     headerSection.style.marginBottom = 'var(--spacing-md)';
+    headerSection.style.marginTop = '20px';
     headerSection.innerHTML = `
         <h1 class="welcome-text" style="font-size: 1.2rem; color: var(--text-sub); font-weight: normal; margin-bottom: 4px;">환영합니다,</h1>
         <h2 class="user-greeting" style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 4px;">${displayName} <span style="font-size: 1.1rem; font-weight: 400; color: var(--text-color);">셀장님</span></h2>

@@ -240,8 +240,8 @@ function showLoginModal(onSuccessCallback) {
                 </div>
                 
                 <div style="text-align: left; margin-bottom: var(--spacing-sm);">
-                    <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">소속 셀</label>
-                    <input type="text" id="login-cell" placeholder="" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
+                    <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Community</label>
+                    <input type="text" id="login-cell" placeholder="(예: 마태)" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
                 </div>
                 
                 <div style="text-align: left; margin-bottom: var(--spacing-lg);">
