@@ -189,11 +189,10 @@ function checkAuthAndInit() {
 
 function showLoginModal() {
     const container = document.getElementById('modal-container');
-    container.style.display = 'flex';
-    container.classList.add('active'); // Fade in background
+    container.className = 'modal-overlay open'; // Ensure it covers the screen
 
     container.innerHTML = `
-        <div class="modal fade-in" style="width: 90%; max-width: 400px; text-align: center;">
+        <div class="modal-content fade-in" style="width: 90%; max-width: 400px; text-align: center;">
             <div style="margin-bottom: var(--spacing-md);">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 15px;">
             </div>
@@ -234,7 +233,7 @@ function showLoginModal() {
 
         if (result.success) {
             // Hide Modal
-            container.classList.remove('active');
+            container.className = 'modal-overlay'; // remove 'open' to fade out
             setTimeout(() => {
                 container.style.display = 'none';
                 container.innerHTML = '';
