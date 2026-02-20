@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ------------- Authentication & Login Modal -------------
 
-function showLoginModal() {
+function showLoginModal(onSuccessCallback) {
     const container = document.getElementById('modal-container');
     container.className = 'modal-overlay open'; // Ensure it covers the screen
 
@@ -224,37 +224,42 @@ function showLoginModal() {
             <div style="margin-bottom: var(--spacing-md);">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 15px;">
             </div>
-            <h2 style="margin-bottom: var(--spacing-sm); color: var(--primary-color);">환영합니다</h2>
+            <h2 style="margin-bottom: var(--spacing-sm); color: var(--primary-color); font-family: 'Dancing Script', cursive; font-size: 2.5rem; font-weight: 700;">Welcome!</h2>
             <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: var(--spacing-lg);">
                 셀장 가이드 앱에 오신 것을 환영합니다.<br>
                 등록된 셀장(교역자)만 이용 가능합니다.
             </p>
             
             <div style="text-align: left; margin-bottom: var(--spacing-sm);">
-                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">이름 *</label>
+                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">Name</label>
                 <input type="text" id="login-name" placeholder="실명을 입력하세요 (예: 홍길동)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
             </div>
             
             <div style="text-align: left; margin-bottom: var(--spacing-sm);">
-                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">소속 셀 (선택)</label>
-                <input type="text" id="login-cell" placeholder="예: 드림1다락방" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">소속 셀</label>
+                <input type="text" id="login-cell" placeholder="" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
             </div>
             
             <div style="text-align: left; margin-bottom: var(--spacing-lg);">
-                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">공통 비밀번호 *</label>
+                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">Password</label>
                 <input type="password" id="login-code" placeholder="교회에서 안내받은 암호" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
             </div>
             
             <div id="login-error" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: var(--spacing-md); display:none;"></div>
             
-            <button id="login-submit-btn" class="modal-close-btn" style="width:100%;">시작하기</button>
+            <button id="login-submit-btn" class="modal-close-btn" style="width:100%; padding: 16px; font-size: 1.1rem; border-radius: 12px;">시작하기</button>
         </div>
     `;
 
-    document.getElementById('login-submit-btn').addEventListener('click', () => {
-        const name = document.getElementById('login-name').value;
-        const cell = document.getElementById('login-cell').value;
-        const code = document.getElementById('login-code').value;
+    const submitBtn = document.getElementById('login-submit-btn');
+    const codeInput = document.getElementById('login-code');
+    const nameInput = document.getElementById('login-name');
+    const cellInput = document.getElementById('login-cell');
+
+    const handleLogin = () => {
+        const name = nameInput.value;
+        const cell = cellInput.value;
+        const code = codeInput.value;
         const errorDiv = document.getElementById('login-error');
 
         const result = ProfileManager.saveProfile(name, cell, code);
@@ -267,16 +272,22 @@ function showLoginModal() {
                 container.innerHTML = '';
             }, 300);
 
-            // Show App
-            document.getElementById('app').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('app').classList.add('app-visible');
-                // Re-render home to show personalized greeting if we hit home first
-                if (currentTab === 'home') switchTab('home');
-            }, 50);
+            if (onSuccessCallback) {
+                onSuccessCallback();
+            }
         } else {
             errorDiv.textContent = result.message;
             errorDiv.style.display = 'block';
+        }
+    };
+
+    submitBtn.addEventListener('click', handleLogin);
+
+    // Allow Enter key to trigger login on password field
+    codeInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleLogin();
         }
     });
 }
