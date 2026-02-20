@@ -141,45 +141,130 @@ document.addEventListener('DOMContentLoaded', () => {
         phase2.addEventListener('click', toPhase3);
     }
 
-    // Step 3: Click Phase 3 -> Go to App
-    if (phase3) {
-        const enterApp = () => {
-            phase3.classList.add('hidden');
-            // Reveal the app smoothly
-            document.getElementById('app').classList.add('app-visible');
-
-
-        };
-        phase3.addEventListener('click', enterApp);
-    }
-
-    // Back Button Logic
-    const backBtn = document.getElementById('header-back-btn');
-    if (backBtn) {
-        backBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent bubbling
-
-            if (phase3) {
-                // Check if phase3 is actually in the DOM (it might have been removed if old code ran)
-                if (!document.body.contains(phase3)) {
-                    alert("지침서 화면이 삭제되었습니다. 앱을 완전히 새로고침 해주세요.");
-                    return;
-                }
-
-                phase3.classList.remove('hidden');
-                // Ensure scroll is at top
-                const container = phase3.querySelector('.guidelines-container');
-                if (container) container.scrollTop = 0;
-            } else {
-                alert("오류: 지침서 화면을 찾을 수 없습니다.");
-            }
-        });
-    }
-
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
             .then(() => console.log('Service Worker Registered'))
             .catch(err => console.log('SW Registration Failed: ', err));
     }
+});
+
+// ------------- Authentication & Login Modal -------------
+import { ProfileManager } from './profile.js';
+
+function checkAuthAndInit() {
+    const isAuth = ProfileManager.init();
+
+    if (!isAuth) {
+        // Hide Main App layout completely
+        document.getElementById('app').style.display = 'none';
+
+        // Ensure Splash Phase 3 hides smoothly if it was visible
+        const phase3 = document.getElementById('splash-phase-3');
+        if (phase3) {
+            phase3.addEventListener('click', () => {
+                phase3.classList.add('hidden');
+                showLoginModal();
+            });
+        } else {
+            showLoginModal();
+        }
+    } else {
+        // Normal Flow: App is visible, Phase 3 enters App
+        const phase3 = document.getElementById('splash-phase-3');
+        if (phase3) {
+            phase3.addEventListener('click', () => {
+                phase3.classList.add('hidden');
+                document.getElementById('app').style.display = 'block'; // Make sure it's block
+                setTimeout(() => {
+                    document.getElementById('app').classList.add('app-visible');
+                }, 50);
+            });
+        } else {
+            document.getElementById('app').style.display = 'block';
+            document.getElementById('app').classList.add('app-visible');
+        }
+    }
+}
+
+function showLoginModal() {
+    const container = document.getElementById('modal-container');
+    container.style.display = 'flex';
+    container.classList.add('active'); // Fade in background
+
+    container.innerHTML = `
+        <div class="modal fade-in" style="width: 90%; max-width: 400px; text-align: center;">
+            <div style="margin-bottom: var(--spacing-md);">
+                <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 15px;">
+            </div>
+            <h2 style="margin-bottom: var(--spacing-sm); color: var(--primary-color);">환영합니다</h2>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: var(--spacing-lg);">
+                셀장 가이드 앱에 오신 것을 환영합니다.<br>
+                본인 인증을 위해 아래 정보를 입력해주세요.
+            </p>
+            
+            <div style="text-align: left; margin-bottom: var(--spacing-sm);">
+                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">이름 *</label>
+                <input type="text" id="login-name" placeholder="홍길동" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+            </div>
+            
+            <div style="text-align: left; margin-bottom: var(--spacing-sm);">
+                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">소속 셀 (선택)</label>
+                <input type="text" id="login-cell" placeholder="예: 드림1다락방" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+            </div>
+            
+            <div style="text-align: left; margin-bottom: var(--spacing-lg);">
+                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">공통 비밀번호 *</label>
+                <input type="password" id="login-code" placeholder="교회에서 안내받은 암호" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+            </div>
+            
+            <div id="login-error" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: var(--spacing-md); display:none;"></div>
+            
+            <button id="login-submit-btn" class="modal-close-btn" style="width:100%;">시작하기</button>
+        </div>
+    `;
+
+    document.getElementById('login-submit-btn').addEventListener('click', () => {
+        const name = document.getElementById('login-name').value;
+        const cell = document.getElementById('login-cell').value;
+        const code = document.getElementById('login-code').value;
+        const errorDiv = document.getElementById('login-error');
+
+        const result = ProfileManager.saveProfile(name, cell, code);
+
+        if (result.success) {
+            // Hide Modal
+            container.classList.remove('active');
+            setTimeout(() => {
+                container.style.display = 'none';
+                container.innerHTML = '';
+            }, 300);
+
+            // Show App
+            document.getElementById('app').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('app').classList.add('app-visible');
+                // Re-render home to show personalized greeting if we hit home first
+                if (currentTab === 'home') switchTab('home');
+            }, 50);
+        } else {
+            errorDiv.textContent = result.message;
+            errorDiv.style.display = 'block';
+        }
+    });
+}
+
+// Intercept Phase 3 Entry Point logic by running our auth check first.
+// Overriding the previous DOMContentLoaded behavior slightly
+document.addEventListener('DOMContentLoaded', () => {
+    // Remove previous phase3 listener that was purely entering app
+    const phase3 = document.getElementById('splash-phase-3');
+    if (phase3) {
+        // We clone and replace to remove all previous event listeners
+        const newPhase3 = phase3.cloneNode(true);
+        phase3.parentNode.replaceChild(newPhase3, phase3);
+    }
+
+    // Run our checked init
+    checkAuthAndInit();
 });

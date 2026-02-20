@@ -1,11 +1,23 @@
-
+import { ProfileManager } from './profile.js';
 import { OATHS, FUNERAL_GUIDE, QUICK_LINKS } from './data.js';
-
-
 
 export function renderHome(container, callbacks = {}) {
     const wrapper = document.createElement('div');
     wrapper.className = 'fade-in';
+
+    // 0. Personalized Greeting
+    const profile = ProfileManager.getProfile();
+    const displayName = profile ? profile.name : "셀장";
+
+    const headerSection = document.createElement('div');
+    headerSection.className = 'home-header-section';
+    headerSection.style.marginBottom = 'var(--spacing-md)';
+    headerSection.innerHTML = `
+        <h1 class="welcome-text" style="font-size: 1.2rem; color: var(--text-sub); font-weight: normal; margin-bottom: 4px;">환영합니다,</h1>
+        <h2 class="user-greeting" style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 4px;">${displayName} <span style="font-size: 1.1rem; font-weight: 400; color: var(--text-color);">셀장님</span></h2>
+        <p class="greeting-sub" style="font-size: 0.95rem; color: var(--text-sub);">오늘도 은혜로운 하루 보내세요!</p>
+    `;
+    wrapper.appendChild(headerSection);
 
 
 
@@ -241,8 +253,30 @@ export function renderHome(container, callbacks = {}) {
 
     wrapper.appendChild(appLinkBtn);
 
-    // 5. Greeting removed as per request
-    // const greeting = document.createElement('div'); ...
+    // 7. Logout / Profile Settings
+    const logoutBtn = document.createElement('div');
+    logoutBtn.className = 'card';
+    logoutBtn.style.padding = '12px var(--spacing-md)';
+    logoutBtn.style.display = 'flex';
+    logoutBtn.style.alignItems = 'center';
+    logoutBtn.style.justifyContent = 'center';
+    logoutBtn.style.cursor = 'pointer';
+    logoutBtn.style.background = '#f5f5f5';
+    logoutBtn.style.boxShadow = 'none';
+    logoutBtn.style.border = '1px solid #ddd';
+    logoutBtn.style.marginTop = 'var(--spacing-md)';
+    logoutBtn.innerHTML = `
+        <div style="color: var(--text-sub); font-size: 0.9rem;">
+            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>프로필 초기화 (로그아웃)
+        </div>
+    `;
+    logoutBtn.onclick = () => {
+        if (confirm("기기에 저장된 인증 정보를 삭제하고 처음부터 다시 시작하시겠습니까?")) {
+            ProfileManager.clearProfile();
+            window.location.reload();
+        }
+    };
+    wrapper.appendChild(logoutBtn);
 
     container.appendChild(wrapper);
 }
