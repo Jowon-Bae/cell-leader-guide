@@ -1,11 +1,10 @@
-
-
-import { renderHome } from './home.js?v=150';
-import { renderMeeting } from './meeting.js?v=150';
-import { renderFuneral } from './funeral.js?v=150';
-import { renderCommunity } from './community.js?v=150';
-import { renderVideoDetail } from './video_detail.js?v=150';
-import { renderSchedule } from './schedule.js?v=150';
+import { ProfileManager } from './profile.js';
+import { renderHome } from './home.js?v=153';
+import { renderMeeting } from './meeting.js?v=153';
+import { renderFuneral } from './funeral.js?v=153';
+import { renderCommunity } from './community.js?v=153';
+import { renderVideoDetail } from './video_detail.js?v=153';
+import { renderSchedule } from './schedule.js?v=153';
 
 // State
 let currentTab = 'home';
@@ -69,6 +68,14 @@ navItems.forEach(item => {
 
 // Initial Render
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. Check Auth First
+    const isAuth = ProfileManager.init();
+
+    if (!isAuth) {
+        document.getElementById('app').style.display = 'none';
+    }
+
+    // 1. Render UI underneath
     switchTab('home');
 
     // Splash Screen Logic (4-Step: Loading -> Video -> Logo -> Guides)
@@ -141,6 +148,53 @@ document.addEventListener('DOMContentLoaded', () => {
         phase2.addEventListener('click', toPhase3);
     }
 
+    // Step 3: Click Phase 3 -> Go to App OR Login
+    if (phase3) {
+        const enterApp = () => {
+            phase3.classList.add('hidden');
+
+            if (!isAuth) {
+                showLoginModal();
+            } else {
+                document.getElementById('app').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('app').classList.add('app-visible');
+                }, 50);
+            }
+        };
+        phase3.addEventListener('click', enterApp);
+    } else if (!isAuth) {
+        // Fallback if Phase 3 doesn't exist for some reason
+        showLoginModal();
+    } else {
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('app').classList.add('app-visible');
+    }
+
+    // Back Button Logic
+    const backBtn = document.getElementById('header-back-btn');
+    if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            if (phase3) {
+                if (!document.body.contains(phase3)) {
+                    alert("지침서 화면이 삭제되었습니다. 앱을 완전히 새로고침 해주세요.");
+                    return;
+                }
+
+                phase3.classList.remove('hidden');
+                document.getElementById('app').classList.remove('app-visible'); // Hide app smoothly
+                setTimeout(() => { document.getElementById('app').style.display = 'none'; }, 300);
+
+                const container = phase3.querySelector('.guidelines-container');
+                if (container) container.scrollTop = 0;
+            } else {
+                alert("오류: 지침서 화면을 찾을 수 없습니다.");
+            }
+        });
+    }
+
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
@@ -150,42 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ------------- Authentication & Login Modal -------------
-import { ProfileManager } from './profile.js';
-
-function checkAuthAndInit() {
-    const isAuth = ProfileManager.init();
-
-    if (!isAuth) {
-        // Hide Main App layout completely
-        document.getElementById('app').style.display = 'none';
-
-        // Ensure Splash Phase 3 hides smoothly if it was visible
-        const phase3 = document.getElementById('splash-phase-3');
-        if (phase3) {
-            phase3.addEventListener('click', () => {
-                phase3.classList.add('hidden');
-                showLoginModal();
-            });
-        } else {
-            showLoginModal();
-        }
-    } else {
-        // Normal Flow: App is visible, Phase 3 enters App
-        const phase3 = document.getElementById('splash-phase-3');
-        if (phase3) {
-            phase3.addEventListener('click', () => {
-                phase3.classList.add('hidden');
-                document.getElementById('app').style.display = 'block'; // Make sure it's block
-                setTimeout(() => {
-                    document.getElementById('app').classList.add('app-visible');
-                }, 50);
-            });
-        } else {
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('app').classList.add('app-visible');
-        }
-    }
-}
 
 function showLoginModal() {
     const container = document.getElementById('modal-container');
@@ -252,18 +270,3 @@ function showLoginModal() {
         }
     });
 }
-
-// Intercept Phase 3 Entry Point logic by running our auth check first.
-// Overriding the previous DOMContentLoaded behavior slightly
-document.addEventListener('DOMContentLoaded', () => {
-    // Remove previous phase3 listener that was purely entering app
-    const phase3 = document.getElementById('splash-phase-3');
-    if (phase3) {
-        // We clone and replace to remove all previous event listeners
-        const newPhase3 = phase3.cloneNode(true);
-        phase3.parentNode.replaceChild(newPhase3, phase3);
-    }
-
-    // Run our checked init
-    checkAuthAndInit();
-});
