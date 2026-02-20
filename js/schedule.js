@@ -2,27 +2,35 @@
 const SCHEDULE_ITEMS = [
     {
         id: 'event1',
-        title: '신년 특별 새벽기도회',
-        date: '2026-01-05',
-        time: '05:00',
-        location: '서울드림교회 본당',
-        description: '한 해를 기도로 시작하는 특별 새벽기도회입니다.'
+        title: '봄학기 공동체 개강',
+        date: '2026-03-08',
+        time: '주일 예배',
+        location: '서울드림교회',
+        description: '새로운 봄학기 공동체를 시작합니다.'
     },
     {
         id: 'event2',
-        title: '셀 리더 수련회',
-        date: '2026-02-20',
-        time: '19:30',
-        location: '비전홀',
-        description: '셀 리더들의 영적 충전을 위한 수련회입니다.'
+        title: '고난주간',
+        date: '2026-03-30',
+        time: '해당 주간',
+        location: '각자의 자리',
+        description: '3/30(월) ~ 4/4(토). 우리를 위해 십자가 지신 예수님의 사랑과 은혜에 감사하는 주간입니다.'
     },
     {
         id: 'event3',
-        title: '부활절 연합예배',
+        title: '성금요예배',
+        date: '2026-04-03',
+        time: '20:00',
+        location: '상문고등학교 체육관',
+        description: '예수님의 십자가 고난을 묵상하는 성금요예배입니다.'
+    },
+    {
+        id: 'event4',
+        title: '부활주일 (세례, 입교식)',
         date: '2026-04-05',
-        time: '11:00',
-        location: '장충체육관',
-        description: '부활의 기쁨을 함께 나누는 연합예배입니다.'
+        time: '주일 예배 시',
+        location: '상문고등학교 체육관, 성수비전센터',
+        description: '부활의 기쁨을 함께 나누는 예배입니다.'
     }
 ];
 
