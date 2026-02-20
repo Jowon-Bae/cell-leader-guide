@@ -154,10 +154,20 @@ function addToCalendar(item) {
     ].join('\r\n'); // Standard line ending
 
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', `${item.title}.ics`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+
+    // iOS Safari workaround
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+        // Encode to base64 to avoid URI parsing issues on Safari
+        const base64Data = btoa(unescape(encodeURIComponent(icsContent)));
+        window.location.href = "data:text/calendar;charset=utf-8;base64," + base64Data;
+    } else {
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', `${item.title}.ics`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 }
