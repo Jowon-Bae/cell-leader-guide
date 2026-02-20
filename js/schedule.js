@@ -102,91 +102,72 @@ export function renderSchedule(container) {
         `;
         card.appendChild(info);
 
-        // Add to Calendar Button
-        const calBtn = document.createElement('button');
-        calBtn.className = 'btn btn-accent'; // Yellow accent
-        calBtn.innerHTML = '<i class="fas fa-calendar-plus"></i> 내 캘린더에 저장';
-        calBtn.style.marginTop = '10px';
-        calBtn.style.fontSize = '0.9rem';
+        // Create inline ICS Data
+        let timeStr = item.time;
+        if (!/^\d{2}:\d{2}$/.test(timeStr)) {
+            timeStr = '09:00'; // Default to 09:00 AM
+        }
+        const startStr = item.date.replace(/-/g, '') + 'T' + timeStr.replace(/:/g, '') + '00';
+        const d = new Date(`${item.date}T${timeStr}:00`);
 
-        calBtn.onclick = () => {
-            addToCalendar(item);
-        };
+        if (!isNaN(d.getTime())) {
+            d.setHours(d.getHours() + 2);
+            const endYear = d.getFullYear();
+            const endMonth = String(d.getMonth() + 1).padStart(2, '0');
+            const endDay = String(d.getDate()).padStart(2, '0');
+            const endHour = String(d.getHours()).padStart(2, '0');
+            const endMin = String(d.getMinutes()).padStart(2, '0');
+            const endStr = `${endYear}${endMonth}${endDay}T${endHour}${endMin}00`;
 
-        card.appendChild(calBtn);
+            const dtstamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            const uid = `${Date.now()}-${item.id}@seouldream.org`;
+
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//SeoulDreamChurch//CellLeaderGuide//KO',
+                'CALSCALE:GREGORIAN',
+                'BEGIN:VEVENT',
+                `UID:${uid}`,
+                `DTSTAMP:${dtstamp}`,
+                `SUMMARY:${item.title}`,
+                `DTSTART:${startStr}`,
+                `DTEND:${endStr}`,
+                `LOCATION:${item.location}`,
+                `DESCRIPTION:${item.description}`,
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            // Add to Calendar Button (Anchor Tag)
+            const calBtn = document.createElement('a');
+            calBtn.className = 'btn btn-accent'; // Yellow accent
+            calBtn.innerHTML = '<i class="fas fa-calendar-plus"></i> 내 캘린더에 저장';
+            calBtn.style.display = 'block';
+            calBtn.style.textAlign = 'center';
+            calBtn.style.textDecoration = 'none';
+            calBtn.style.marginTop = '10px';
+            calBtn.style.fontSize = '0.9rem';
+
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+            if (isIOS) {
+                // Native link to data URI (No download attribute, no target blank)
+                // iOS Safari intercepts direct user clicks on text/calendar data URIs natively
+                const base64Data = btoa(unescape(encodeURIComponent(icsContent)));
+                calBtn.href = `data:text/calendar;charset=utf-8;base64,${base64Data}`;
+            } else {
+                const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+                calBtn.href = window.URL.createObjectURL(blob);
+                calBtn.setAttribute('download', `${item.title}.ics`);
+            }
+
+            card.appendChild(calBtn);
+        }
+
         list.appendChild(card);
     });
 
     wrapper.appendChild(list);
     container.appendChild(wrapper);
-}
-
-// Helper: Generate .ics file and trigger download
-function addToCalendar(item) {
-    // Handle non-standard time strings (e.g. "주일 예배", "해당 주간")
-    let timeStr = item.time;
-    if (!/^\d{2}:\d{2}$/.test(timeStr)) {
-        timeStr = '09:00'; // Default to 09:00 AM if no exact time is provided
-    }
-
-    // Format Date: YYYYMMDDTHHMMSS
-    const startStr = item.date.replace(/-/g, '') + 'T' + timeStr.replace(/:/g, '') + '00';
-
-    // End Date (Assume 2 hours duration for simplicity)
-    const d = new Date(`${item.date}T${timeStr}:00`);
-    if (isNaN(d.getTime())) {
-        alert("일정 날짜 오류로 캘린더에 추가할 수 없습니다.");
-        return;
-    }
-    d.setHours(d.getHours() + 2);
-
-    const endYear = d.getFullYear();
-    const endMonth = String(d.getMonth() + 1).padStart(2, '0');
-    const endDay = String(d.getDate()).padStart(2, '0');
-    const endHour = String(d.getHours()).padStart(2, '0');
-    const endMin = String(d.getMinutes()).padStart(2, '0');
-
-    const endStr = `${endYear}${endMonth}${endDay}T${endHour}${endMin}00`;
-
-    // REQUIRED for Apple Calendar: UID and DTSTAMP. 
-    // Without these, iOS silently rejects the ICS file and fails to show the Add to Calendar prompt.
-    const dtstamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    const uid = `${Date.now()}-${item.id}@seouldream.org`;
-
-    const icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//SeoulDreamChurch//CellLeaderGuide//KO',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        `UID:${uid}`,
-        `DTSTAMP:${dtstamp}`,
-        `SUMMARY:${item.title}`,
-        `DTSTART:${startStr}`,
-        `DTEND:${endStr}`,
-        `LOCATION:${item.location}`,
-        `DESCRIPTION:${item.description}`,
-        'END:VEVENT',
-        'END:VCALENDAR'
-    ].join('\r\n'); // Standard line ending
-
-    const file = new File([icsContent], `${item.title}.ics`, { type: 'text/calendar' });
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-    if (isIOS && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        // Native iOS Share Sheet handles .ics Files beautifully IF the data is perfectly valid
-        navigator.share({
-            files: [file],
-            title: item.title,
-        }).catch(err => console.error('Error sharing:', err));
-    } else {
-        // Desktop / Android fallback
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', `${item.title}.ics`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
 }
