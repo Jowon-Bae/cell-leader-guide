@@ -153,21 +153,23 @@ function addToCalendar(item) {
         'END:VCALENDAR'
     ].join('\r\n'); // Standard line ending
 
-    const file = new File([icsContent], `${item.title}.ics`, { type: 'text/calendar' });
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
 
-    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-            files: [file],
-            title: item.title,
-        }).catch(err => console.error('Error sharing:', err));
+    // iOS Safari workaround: Remove 'download' attribute.
+    // Safari treats blob downloads as generic files or blocks them.
+    // By omitting 'download' and using target='_blank', Safari navigates to the 
+    // text/calendar Blob and natively hands it off to the Calendar app.
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    if (isIOS) {
+        link.target = '_blank';
     } else {
-        // Fallback for desktop / unsupported browsers
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
         link.setAttribute('download', `${item.title}.ics`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
     }
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
