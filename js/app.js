@@ -220,34 +220,39 @@ function showLoginModal(onSuccessCallback) {
     container.className = 'modal-overlay open'; // Ensure it covers the screen
 
     container.innerHTML = `
-        <div class="modal-content fade-in" style="width: 90%; max-width: 400px; text-align: center;">
-            <div style="margin-bottom: var(--spacing-md);">
-                <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 15px;">
+        <div class="modal-content fade-in" style="width: 90%; max-width: 400px; text-align: center; background: url('assets/background_card.jpeg') no-repeat center center / cover; color: white;">
+            <!-- Dark overlay to ensure text readability against the potentially bright background image -->
+            <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); border-radius: var(--radius-lg); z-index: 1;"></div>
+            
+            <div style="position: relative; z-index: 2; padding: 10px;">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                </div>
+                <h2 style="margin-bottom: var(--spacing-sm); color: white; font-family: 'Dancing Script', cursive; font-size: 2.5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Welcome!</h2>
+                <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-bottom: var(--spacing-lg); text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                    셀장 가이드 앱에 오신 것을 환영합니다.<br>
+                    등록된 셀장(교역자)만 이용 가능합니다.
+                </p>
+                
+                <div style="text-align: left; margin-bottom: var(--spacing-sm);">
+                    <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Name</label>
+                    <input type="text" id="login-name" placeholder="실명을 입력하세요 (예: 홍길동)" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
+                </div>
+                
+                <div style="text-align: left; margin-bottom: var(--spacing-sm);">
+                    <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">소속 셀</label>
+                    <input type="text" id="login-cell" placeholder="" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
+                </div>
+                
+                <div style="text-align: left; margin-bottom: var(--spacing-lg);">
+                    <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Password</label>
+                    <input type="password" id="login-code" placeholder="교회에서 안내받은 암호" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
+                </div>
+                
+                <div id="login-error" style="color: #ff8a80; font-size: 0.85rem; margin-bottom: var(--spacing-md); display:none; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></div>
+                
+                <button id="login-submit-btn" class="modal-close-btn" style="width:100%; padding: 16px; font-size: 1.1rem; border-radius: 12px; background-color: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(5px);">시작하기</button>
             </div>
-            <h2 style="margin-bottom: var(--spacing-sm); color: var(--primary-color); font-family: 'Dancing Script', cursive; font-size: 2.5rem; font-weight: 700;">Welcome!</h2>
-            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: var(--spacing-lg);">
-                셀장 가이드 앱에 오신 것을 환영합니다.<br>
-                등록된 셀장(교역자)만 이용 가능합니다.
-            </p>
-            
-            <div style="text-align: left; margin-bottom: var(--spacing-sm);">
-                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">Name</label>
-                <input type="text" id="login-name" placeholder="실명을 입력하세요 (예: 홍길동)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
-            </div>
-            
-            <div style="text-align: left; margin-bottom: var(--spacing-sm);">
-                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">소속 셀</label>
-                <input type="text" id="login-cell" placeholder="" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
-            </div>
-            
-            <div style="text-align: left; margin-bottom: var(--spacing-lg);">
-                <label style="display:block; font-size:0.85rem; font-weight:bold; color:var(--primary-color); margin-bottom: 4px;">Password</label>
-                <input type="password" id="login-code" placeholder="교회에서 안내받은 암호" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
-            </div>
-            
-            <div id="login-error" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: var(--spacing-md); display:none;"></div>
-            
-            <button id="login-submit-btn" class="modal-close-btn" style="width:100%; padding: 16px; font-size: 1.1rem; border-radius: 12px;">시작하기</button>
         </div>
     `;
 
