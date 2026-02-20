@@ -55,8 +55,8 @@ export function renderFuneral(container) {
     // Call Button (Optional enhancement)
     const callBtn = document.createElement('a');
     callBtn.className = 'btn btn-primary';
-    callBtn.href = 'tel:010-0000-0000'; // Placeholder
-    callBtn.innerHTML = '<i class="fas fa-phone"></i> 담당 교역자에게 전화하기';
+    callBtn.href = 'tel:010-9017-1848';
+    callBtn.innerHTML = '<i class="fas fa-phone"></i> 배주원 목사 010-9017-1848';
     callBtn.style.marginTop = 'var(--spacing-md)';
     wrapper.appendChild(callBtn);
 
