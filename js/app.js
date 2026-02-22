@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('app').classList.add('app-visible');
                     if (currentTab === 'home') switchTab('home');
                 }, 50);
-            });
+            }, true); // Pass true to disable transition
         }, 100);
 
         return; // Skip the rest of splash setup
@@ -243,9 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ------------- Authentication & Login Modal -------------
 
-function showLoginModal(onSuccessCallback) {
+function showLoginModal(onSuccessCallback, instant = false) {
     const container = document.getElementById('modal-container');
-    container.className = 'modal-overlay open'; // Ensure it covers the screen
+
+    if (instant) {
+        container.classList.add('no-transition');
+    }
+
+    container.className = `modal-overlay open ${instant ? 'no-transition' : ''}`; // Ensure it covers the screen
 
     container.innerHTML = `
         <div class="modal-content fade-in" style="width: 90%; max-width: 400px; text-align: center; background: url('assets/background_card.jpeg') no-repeat center center / cover; color: white;">

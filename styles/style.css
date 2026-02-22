@@ -359,6 +359,11 @@ body {
   transform: translateY(0);
 }
 
+.modal-overlay.no-transition,
+.modal-overlay.no-transition .modal-content {
+  transition: none !important;
+}
+
 /* Meeting Tab Styling */
 .timer-card {
   text-align: center;
