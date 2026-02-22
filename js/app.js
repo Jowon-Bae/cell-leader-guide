@@ -256,7 +256,7 @@ function showLoginModal(onSuccessCallback, instant = false) {
 
     if (!isPreRendered) {
         container.innerHTML = `
-            <div class="modal-content ${instant ? '' : 'fade-in'}" style="width: 90%; max-width: 400px; text-align: center; background: url('assets/background_card.jpeg') no-repeat center center / cover; color: white;">
+            <div class="modal-content ${instant ? '' : 'fade-in'}" style="width: 90%; max-width: 400px; text-align: center; background: #1a237e url('assets/background_card.jpeg') no-repeat center center / cover; color: white;">
                 <!-- Dark overlay to ensure text readability against the potentially bright background image -->
                 <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); border-radius: var(--radius-lg); z-index: 1;"></div>
                 
