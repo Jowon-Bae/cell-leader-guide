@@ -71,6 +71,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // 0. Check Auth First
     let isAuth = ProfileManager.init();
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceLogin = urlParams.get('login') === 'true';
+
+    if (forceLogin && !isAuth) {
+        document.getElementById('app').style.display = 'none';
+
+        // Hide all splash screens
+        ['splash-loading', 'splash-phase-1', 'splash-phase-2', 'splash-phase-3'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+
+        switchTab('home');
+
+        setTimeout(() => {
+            showLoginModal(() => {
+                isAuth = true;
+                document.getElementById('app').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('app').classList.add('app-visible');
+                    if (currentTab === 'home') switchTab('home');
+                }, 50);
+            });
+        }, 100);
+
+        return; // Skip the rest of splash setup
+    }
+
     if (!isAuth) {
         document.getElementById('app').style.display = 'none';
     }
