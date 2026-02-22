@@ -41,6 +41,13 @@
 </head>
 
 <body>
+    <!-- Anti-Flash Script for Deep Links -->
+    <script>
+        if (window.location.search.includes('login=true')) {
+            document.write('<style>#splash-loading, #splash-phase-1, #splash-phase-2, #splash-phase-3, #app { display: none !important; }</style>');
+        }
+    </script>
+
     <!-- Phase 0: Loading (Rotating Logo) -->
     <div id="splash-loading">
         <img src="assets/logo.png" alt="Loading Logo" class="loading-logo">
