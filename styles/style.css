@@ -362,6 +362,8 @@ body {
 .modal-overlay.no-transition,
 .modal-overlay.no-transition .modal-content {
   transition: none !important;
+  animation: none !important;
+  transform: none !important;
 }
 
 /* Meeting Tab Styling */
