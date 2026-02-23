@@ -91,11 +91,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 const antiFlashStyle = document.getElementById('anti-flash-style');
                 if (antiFlashStyle) antiFlashStyle.remove();
 
-                document.getElementById('app').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('app').classList.add('app-visible');
-                    if (currentTab === 'home') switchTab('home');
-                }, 50);
+                const phase3 = document.getElementById('splash-phase-3');
+                if (phase3) {
+                    phase3.style.display = ''; // Clear the inline display:none
+                    phase3.style.transition = 'none';
+                    phase3.classList.remove('hidden');
+
+                    setTimeout(() => { phase3.style.transition = ''; }, 50);
+
+                    // Allow clicking the guidelines to enter the app
+                    phase3.addEventListener('click', () => {
+                        phase3.classList.add('hidden');
+                        document.getElementById('app').style.display = 'block';
+                        setTimeout(() => {
+                            document.getElementById('app').classList.add('app-visible');
+                            if (currentTab === 'home') switchTab('home');
+                        }, 50);
+                    }, { once: true });
+                } else {
+                    document.getElementById('app').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('app').classList.add('app-visible');
+                        if (currentTab === 'home') switchTab('home');
+                    }, 50);
+                }
             }, true); // Pass true to disable transition
         }, 100);
 
