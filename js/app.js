@@ -88,6 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             showLoginModal(() => {
                 isAuth = true;
+                const antiFlashStyle = document.getElementById('anti-flash-style');
+                if (antiFlashStyle) antiFlashStyle.remove();
+
                 document.getElementById('app').style.display = 'block';
                 setTimeout(() => {
                     document.getElementById('app').classList.add('app-visible');
