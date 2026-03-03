@@ -12,13 +12,9 @@ export function renderSchedule(container) {
     // Helper to create banner cards
     const createBanner = (title, subtitle, imageSrc, onClick) => {
         const card = document.createElement('div');
-        card.className = 'card';
-        card.style.padding = '0';
-        card.style.overflow = 'hidden';
+        card.className = 'slider-container'; // Use standard 16:9 scale
+        card.style.margin = '0 0 var(--spacing-md) 0'; // override bottom margin
         card.style.cursor = 'pointer';
-        card.style.position = 'relative';
-        card.style.height = '120px';
-        card.style.borderRadius = '16px';
         card.onclick = onClick;
 
         const img = document.createElement('img');
@@ -160,10 +156,8 @@ function renderMissionDetail(container) {
     // Helper to create simple detail banner cards
     const createDetailBanner = (titleText, subtitleText, imageSrc, linkObj) => {
         const card = document.createElement('div');
-        card.style.height = '120px';
-        card.style.borderRadius = '16px';
-        card.style.overflow = 'hidden';
-        card.style.position = 'relative';
+        card.className = 'slider-container'; // standard 16:9 scale
+        card.style.margin = '0';
 
         const link = document.createElement('a');
         link.href = linkObj;
@@ -284,7 +278,8 @@ function renderDreamPlusDetail(container) {
 
     const createDetailBanner = (titleText, subtitleText, imageSrc, actionLink) => {
         const card = document.createElement('div');
-        card.style.height = '120px';
+        card.className = 'slider-container'; // standard 16:9 scale
+        // card.style.height = '120px'; // Removed as per instruction
         card.style.borderRadius = '16px';
         card.style.overflow = 'hidden';
         card.style.position = 'relative';
