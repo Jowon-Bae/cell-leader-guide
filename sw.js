@@ -1,5 +1,5 @@
-// Service Worker v180 - Force cache clear update for App Store ID fix
-const CACHE_VERSION = 'v180';
+// Service Worker v181 - Try alternative URL scheme
+const CACHE_VERSION = 'v181';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
