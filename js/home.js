@@ -171,9 +171,11 @@ export function renderHome(container, callbacks = {}) {
 
     // 5. Worship Guide Image (Request: Same size, below Welcome)
     const worshipSection = document.createElement('div');
-    worshipSection.className = 'slider-container';
     worshipSection.style.marginTop = 'var(--spacing-md)';
-    worshipSection.style.background = 'transparent';
+    worshipSection.style.height = '120px';
+    worshipSection.style.borderRadius = '16px';
+    worshipSection.style.overflow = 'hidden';
+    worshipSection.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
 
     const worshipLink = document.createElement('a');
     worshipLink.href = 'http://seouldream.org/Board/Index/3639';
@@ -188,7 +190,7 @@ export function renderHome(container, callbacks = {}) {
     worshipImg.loading = 'lazy';
     worshipImg.style.width = '100%';
     worshipImg.style.height = '100%';
-    worshipImg.style.objectFit = 'contain';
+    worshipImg.style.objectFit = 'cover';
 
     worshipLink.appendChild(worshipImg);
     worshipSection.appendChild(worshipLink);

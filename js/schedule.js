@@ -1,173 +1,358 @@
-
-const SCHEDULE_ITEMS = [
-    {
-        id: 'event1',
-        title: '봄학기 공동체 개강',
-        date: '2026-03-08',
-        time: '주일 예배',
-        location: '서울드림교회',
-        description: '새로운 봄학기 공동체를 시작합니다.'
-    },
-    {
-        id: 'event2',
-        title: '고난주간',
-        date: '2026-03-30',
-        time: '해당 주간',
-        location: '각자의 자리',
-        description: '3/30(월) ~ 4/4(토). 우리를 위해 십자가 지신 예수님의 사랑과 은혜에 감사하는 주간입니다.'
-    },
-    {
-        id: 'event3',
-        title: '성금요예배',
-        date: '2026-04-03',
-        time: '20:00',
-        location: '상문고등학교 체육관',
-        description: '예수님의 십자가 고난을 묵상하는 성금요예배입니다.'
-    },
-    {
-        id: 'event4',
-        title: '부활주일 (세례, 입교식)',
-        date: '2026-04-05',
-        time: '주일 예배 시',
-        location: '상문고등학교 체육관, 성수비전센터',
-        description: '부활의 기쁨을 함께 나누는 예배입니다.'
-    }
-];
-
 export function renderSchedule(container) {
     const wrapper = document.createElement('div');
     wrapper.className = 'fade-in';
     wrapper.style.padding = 'var(--spacing-md)';
     wrapper.style.paddingBottom = '100px';
 
-    const header = document.createElement('img');
-    header.src = 'assets/church-events-1770370120198.png';
-    header.alt = 'Church Events';
-    header.style.width = '100%';
-    header.style.marginBottom = 'var(--spacing-md)';
-    header.style.borderRadius = 'var(--radius-md)'; // Optional rounded corners
-    header.style.display = 'block'; // Ensure block display
-    wrapper.appendChild(header);
-
     const list = document.createElement('div');
     list.style.display = 'flex';
     list.style.flexDirection = 'column';
     list.style.gap = 'var(--spacing-md)';
 
-    SCHEDULE_ITEMS.forEach(item => {
+    // Helper to create banner cards
+    const createBanner = (title, subtitle, imageSrc, onClick) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.style.display = 'flex';
-        card.style.flexDirection = 'column';
-        card.style.gap = '8px';
+        card.style.padding = '0';
+        card.style.overflow = 'hidden';
+        card.style.cursor = 'pointer';
+        card.style.position = 'relative';
+        card.style.height = '120px';
+        card.style.borderRadius = '16px';
+        card.onclick = onClick;
 
-        // Date Badge
-        const dateObj = new Date(item.date);
-        const month = dateObj.getMonth() + 1;
-        const day = dateObj.getDate();
-        const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()];
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
 
-        const headerRow = document.createElement('div');
-        headerRow.style.display = 'flex';
-        headerRow.style.justifyContent = 'space-between';
-        headerRow.style.alignItems = 'center';
+        const overlay = document.createElement('div');
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.right = '0';
+        overlay.style.bottom = '0';
+        overlay.style.background = 'linear-gradient(to right, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.1) 100%)';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.justifyContent = 'center';
+        overlay.style.padding = '20px';
 
-        const dateBadge = document.createElement('div');
-        dateBadge.style.background = 'var(--primary-light)';
-        dateBadge.style.color = 'white';
-        dateBadge.style.padding = '4px 12px';
-        dateBadge.style.borderRadius = 'var(--radius-round)';
-        dateBadge.style.fontSize = '0.9rem';
-        dateBadge.style.fontWeight = 'bold';
-        dateBadge.textContent = `${month}월 ${day}일 (${dayOfWeek})`;
+        const h3 = document.createElement('h3');
+        h3.textContent = title;
+        h3.style.color = 'white';
+        h3.style.fontSize = '1.25rem';
+        h3.style.fontWeight = 'bold';
+        h3.style.marginBottom = '4px';
 
-        headerRow.appendChild(dateBadge);
-        card.appendChild(headerRow);
+        const p = document.createElement('p');
+        p.textContent = subtitle;
+        p.style.color = 'rgba(255, 255, 255, 0.8)';
+        p.style.fontSize = '0.875rem';
 
-        // Title
-        const title = document.createElement('h3');
-        title.textContent = item.title;
-        title.style.fontSize = '1.2rem';
-        title.style.color = 'var(--text-main)';
-        card.appendChild(title);
+        const iconContainer = document.createElement('div');
+        iconContainer.style.position = 'absolute';
+        iconContainer.style.right = '12px';
+        iconContainer.style.top = '12px';
+        iconContainer.style.width = '32px';
+        iconContainer.style.height = '32px';
+        iconContainer.style.backgroundColor = '#f3f4f6';
+        iconContainer.style.borderRadius = '50%';
+        iconContainer.style.display = 'flex';
+        iconContainer.style.alignItems = 'center';
+        iconContainer.style.justifyContent = 'center';
 
-        // Info
-        const info = document.createElement('div');
-        info.style.fontSize = '0.95rem';
-        info.style.color = 'var(--text-sub)';
-        info.innerHTML = `
-            <i class="fas fa-clock" style="width:20px"></i> ${item.time}<br>
-            <i class="fas fa-map-marker-alt" style="width:20px"></i> ${item.location}<br>
-            <span style="display:block; margin-top:5px; color:#888;">${item.description}</span>
-        `;
-        card.appendChild(info);
+        const chevron = document.createElement('i');
+        chevron.className = 'fas fa-chevron-right';
+        chevron.style.color = '#3b82f6';
+        chevron.style.fontSize = '14px';
 
-        // Create inline ICS Data
-        let timeStr = item.time;
-        if (!/^\d{2}:\d{2}$/.test(timeStr)) {
-            timeStr = '09:00'; // Default to 09:00 AM
+        iconContainer.appendChild(chevron);
+        overlay.appendChild(h3);
+        overlay.appendChild(p);
+        overlay.appendChild(iconContainer);
+
+        card.appendChild(img);
+        card.appendChild(overlay);
+        return card;
+    };
+
+    // Mission Banner
+    const missionCard = createBanner(
+        'Mission',
+        '국내 선교 & 해외 선교',
+        'assets/slide4.jpg',
+        () => {
+            renderMissionDetail(container);
         }
-        const startStr = item.date.replace(/-/g, '') + 'T' + timeStr.replace(/:/g, '') + '00';
-        const d = new Date(`${item.date}T${timeStr}:00`);
+    );
+    list.appendChild(missionCard);
 
-        if (!isNaN(d.getTime())) {
-            d.setHours(d.getHours() + 2);
-            const endYear = d.getFullYear();
-            const endMonth = String(d.getMonth() + 1).padStart(2, '0');
-            const endDay = String(d.getDate()).padStart(2, '0');
-            const endHour = String(d.getHours()).padStart(2, '0');
-            const endMin = String(d.getMinutes()).padStart(2, '0');
-            const endStr = `${endYear}${endMonth}${endDay}T${endHour}${endMin}00`;
-
-            const dtstamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-            const uid = `${Date.now()}-${item.id}@seouldream.org`;
-
-            const icsContent = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'PRODID:-//SeoulDreamChurch//CellLeaderGuide//KO',
-                'CALSCALE:GREGORIAN',
-                'BEGIN:VEVENT',
-                `UID:${uid}`,
-                `DTSTAMP:${dtstamp}`,
-                `SUMMARY:${item.title}`,
-                `DTSTART:${startStr}`,
-                `DTEND:${endStr}`,
-                `LOCATION:${item.location}`,
-                `DESCRIPTION:${item.description}`,
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\r\n');
-
-            // Add to Calendar Button (Anchor Tag)
-            const calBtn = document.createElement('a');
-            calBtn.className = 'btn btn-accent'; // Yellow accent
-            calBtn.innerHTML = '<i class="fas fa-calendar-plus"></i> 내 캘린더에 저장';
-            calBtn.style.display = 'block';
-            calBtn.style.textAlign = 'center';
-            calBtn.style.textDecoration = 'none';
-            calBtn.style.marginTop = '10px';
-            calBtn.style.fontSize = '0.9rem';
-
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-            if (isIOS) {
-                // Native link to data URI (No download attribute, no target blank)
-                // iOS Safari intercepts direct user clicks on text/calendar data URIs natively
-                const base64Data = btoa(unescape(encodeURIComponent(icsContent)));
-                calBtn.href = `data:text/calendar;charset=utf-8;base64,${base64Data}`;
-            } else {
-                const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-                calBtn.href = window.URL.createObjectURL(blob);
-                calBtn.setAttribute('download', `${item.title}.ics`);
-            }
-
-            card.appendChild(calBtn);
+    // Dream+ Banner
+    const dreamPlusCard = createBanner(
+        'Dream +',
+        '드림플러스 상세 보기',
+        'assets/dreamplus2_mid.jpeg',
+        () => {
+            renderDreamPlusDetail(container);
         }
-
-        list.appendChild(card);
-    });
+    );
+    list.appendChild(dreamPlusCard);
 
     wrapper.appendChild(list);
+    container.appendChild(wrapper);
+}
+
+function renderMissionDetail(container) {
+    container.innerHTML = '';
+    container.scrollTop = 0;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'fade-in';
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'column';
+    wrapper.style.height = '100%';
+    wrapper.style.backgroundColor = 'var(--bg-color)';
+
+    // Header
+    const header = document.createElement('div');
+    header.style.padding = 'var(--spacing-md)';
+    header.style.display = 'flex';
+    header.style.alignItems = 'center';
+    header.style.background = 'white';
+    header.style.boxShadow = 'var(--shadow-sm)';
+    header.style.position = 'sticky';
+    header.style.top = '0';
+    header.style.zIndex = '10';
+
+    const backBtn = document.createElement('button');
+    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i>';
+    backBtn.style.background = 'none';
+    backBtn.style.border = 'none';
+    backBtn.style.fontSize = '1.2rem';
+    backBtn.style.color = 'var(--text-main)';
+    backBtn.style.cursor = 'pointer';
+    backBtn.style.marginRight = 'var(--spacing-md)';
+    backBtn.onclick = () => {
+        container.innerHTML = '';
+        renderSchedule(container);
+    };
+
+    const title = document.createElement('h2');
+    title.textContent = 'Mission';
+    title.style.fontSize = '1.2rem';
+    title.style.margin = '0';
+    title.style.color = 'var(--text-main)';
+
+    header.appendChild(backBtn);
+    header.appendChild(title);
+    wrapper.appendChild(header);
+
+    // Content
+    const content = document.createElement('div');
+    content.style.padding = 'var(--spacing-md)';
+    content.style.paddingBottom = '80px';
+    content.style.display = 'flex';
+    content.style.flexDirection = 'column';
+    content.style.gap = 'var(--spacing-md)';
+
+    // Helper to create simple detail banner cards
+    const createDetailBanner = (titleText, subtitleText, imageSrc, linkObj) => {
+        const card = document.createElement('div');
+        card.style.height = '120px';
+        card.style.borderRadius = '16px';
+        card.style.overflow = 'hidden';
+        card.style.position = 'relative';
+
+        const link = document.createElement('a');
+        link.href = linkObj;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.style.display = 'block';
+        link.style.width = '100%';
+        link.style.height = '100%';
+
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+
+        const overlay = document.createElement('div');
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.right = '0';
+        overlay.style.bottom = '0';
+        overlay.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%)';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.justifyContent = 'flex-end';
+        overlay.style.padding = '20px';
+
+        const h3 = document.createElement('h3');
+        h3.textContent = titleText;
+        h3.style.color = 'white';
+        h3.style.fontSize = '1.25rem';
+        h3.style.fontWeight = 'bold';
+        h3.style.marginBottom = '4px';
+
+        const p = document.createElement('p');
+        p.textContent = subtitleText;
+        p.style.color = 'rgba(255, 255, 255, 0.8)';
+        p.style.fontSize = '0.875rem';
+
+        overlay.appendChild(h3);
+        overlay.appendChild(p);
+        link.appendChild(img);
+        link.appendChild(overlay);
+        card.appendChild(link);
+        return card;
+    };
+
+    content.appendChild(createDetailBanner(
+        '국내 선교',
+        'Domestic Missions',
+        'assets/slide5.jpg',
+        'https://seouldream.org/Board/Index/3642'
+    ));
+
+    content.appendChild(createDetailBanner(
+        '해외 선교',
+        'Global Missions',
+        'assets/slide4.jpg',
+        'https://seouldream.org/Board/Index/3847'
+    ));
+
+    wrapper.appendChild(content);
+    container.appendChild(wrapper);
+}
+
+function renderDreamPlusDetail(container) {
+    container.innerHTML = '';
+    container.scrollTop = 0;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'fade-in';
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'column';
+    wrapper.style.height = '100%';
+    wrapper.style.backgroundColor = 'var(--bg-color)';
+
+    // Header
+    const header = document.createElement('div');
+    header.style.padding = 'var(--spacing-md)';
+    header.style.display = 'flex';
+    header.style.alignItems = 'center';
+    header.style.background = 'white';
+    header.style.boxShadow = 'var(--shadow-sm)';
+    header.style.position = 'sticky';
+    header.style.top = '0';
+    header.style.zIndex = '10';
+
+    const backBtn = document.createElement('button');
+    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i>';
+    backBtn.style.background = 'none';
+    backBtn.style.border = 'none';
+    backBtn.style.fontSize = '1.2rem';
+    backBtn.style.color = 'var(--text-main)';
+    backBtn.style.cursor = 'pointer';
+    backBtn.style.marginRight = 'var(--spacing-md)';
+    backBtn.onclick = () => {
+        container.innerHTML = '';
+        renderSchedule(container); // Go back to Ministry Tab
+    };
+
+    const title = document.createElement('h2');
+    title.textContent = 'Dream +';
+    title.style.fontSize = '1.2rem';
+    title.style.margin = '0';
+    title.style.color = 'var(--text-main)';
+
+    header.appendChild(backBtn);
+    header.appendChild(title);
+    wrapper.appendChild(header);
+
+    // Content
+    const content = document.createElement('div');
+    content.style.padding = 'var(--spacing-md)';
+    content.style.paddingBottom = '80px';
+    content.style.display = 'flex';
+    content.style.flexDirection = 'column';
+    content.style.gap = 'var(--spacing-md)';
+
+    const createDetailBanner = (titleText, subtitleText, imageSrc, actionLink) => {
+        const card = document.createElement('div');
+        card.style.height = '120px';
+        card.style.borderRadius = '16px';
+        card.style.overflow = 'hidden';
+        card.style.position = 'relative';
+
+        const ElementType = actionLink ? 'a' : 'div';
+        const inner = document.createElement(ElementType);
+        inner.style.display = 'block';
+        inner.style.width = '100%';
+        inner.style.height = '100%';
+        if (actionLink) {
+            inner.href = actionLink;
+            inner.target = '_blank';
+            inner.rel = 'noopener noreferrer';
+        }
+
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+
+        const overlay = document.createElement('div');
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.right = '0';
+        overlay.style.bottom = '0';
+        overlay.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%)';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.justifyContent = 'flex-end';
+        overlay.style.padding = '20px';
+
+        const h3 = document.createElement('h3');
+        h3.textContent = titleText;
+        h3.style.color = 'white';
+        h3.style.fontSize = '1.25rem';
+        h3.style.fontWeight = 'bold';
+        h3.style.marginBottom = '4px';
+
+        const p = document.createElement('p');
+        p.textContent = subtitleText;
+        p.style.color = 'rgba(255, 255, 255, 0.8)';
+        p.style.fontSize = '0.875rem';
+
+        overlay.appendChild(h3);
+        overlay.appendChild(p);
+        inner.appendChild(img);
+        inner.appendChild(overlay);
+
+        card.appendChild(inner);
+        return card;
+    };
+
+    content.appendChild(createDetailBanner(
+        '드림플러스 사역 안내',
+        'Ministry Guide',
+        'assets/dreamplus1_mid.jpeg',
+        null // Clicking doesnt route externally according to spec
+    ));
+
+    content.appendChild(createDetailBanner(
+        '드림플러스 유튜브 링크',
+        'YouTube Channel',
+        'assets/dreamplus2_mid.jpeg',
+        'https://www.youtube.com/@드림플러스'
+    ));
+
+    wrapper.appendChild(content);
     container.appendChild(wrapper);
 }
