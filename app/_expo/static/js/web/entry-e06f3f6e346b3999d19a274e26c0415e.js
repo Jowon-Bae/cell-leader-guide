@@ -874,7 +874,7 @@ __d(function(g,r,_i,a,m,_e,d){"use strict";function e(e){return e&&e.__esModule?
 __d(function(g,r,i,a,m,e,d){m.exports={uri:"/cell-leader-guide/app/assets/assets/images/slide1.4eea0bf06d7857b6150816cab1b21146.jpg",width:1080,height:607}},761,[]);
 __d(function(g,r,i,a,m,e,d){m.exports={uri:"/cell-leader-guide/app/assets/assets/images/slide2.d291af48da9861bf7b8098cd6cee7db0.jpg",width:1080,height:607}},762,[]);
 __d(function(g,r,i,a,m,e,d){m.exports={uri:"/cell-leader-guide/app/assets/assets/images/slide3.fdee784bea879f1ad35ddeac9917bfc1.jpg",width:1080,height:607}},763,[]);
-__d(function(g,r,i,a,m,e,d){m.exports={uri:"/cell-leader-guide/app/assets/assets/images/slide4.b2d9252198ccf2d05ce5352b0fb7122b.jpg",width:1080,height:607}},764,[]);
+__d(function(g,r,i,a,m,e,d){m.exports={uri:"/cell-leader-guide/app/assets/assets/images/mission_banner.jpeg",width:1080,height:607}},764,[]);
 __d(function(g,r,i,a,m,e,d){m.exports={uri:"/cell-leader-guide/app/assets/assets/images/slide5.8f993078eb0f386b1593fa13eb4be6d8.jpg",width:1080,height:607}},765,[]);
 __d(function(e,s,a,c,i,t,d){i.exports={uri:"/cell-leader-guide/app/assets/assets/images/welcome.1f8b67065d9381a89028c7f318c03c6b.png",width:1080,height:602}},766,[]);
 __d(function(e,a,s,i,d,t,g){d.exports={uri:"/cell-leader-guide/app/assets/assets/images/worship_guide.9a9bea2d90a4a3b9720bad2c45358e1f.png",width:1080,height:602}},767,[]);
