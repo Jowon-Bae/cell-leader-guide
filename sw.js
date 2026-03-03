@@ -1,5 +1,5 @@
-// Service Worker v179 - Force cache clear update for PWA deep link fix
-const CACHE_VERSION = 'v179';
+// Service Worker v180 - Force cache clear update for App Store ID fix
+const CACHE_VERSION = 'v180';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);

@@ -6,9 +6,9 @@ import { renderCommunity } from './community.js';
 import { renderVideoDetail } from './video_detail.js';
 import { renderSchedule } from './schedule_v2.js';
 
-// Update version manually to force fresh load across the board: v179
+// Update version manually to force fresh load across the board: v180
 const script = document.createElement('script');
-script.src = `./js/schedule_v2.js?v=179`;
+script.src = `./js/schedule_v2.js?v=180`;
 document.body.appendChild(script);
 
 // State
