@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+        // GitHub Pages SPA redirect handler
+        // This file handles ALL 404s for this GitHub Pages site.
+        // If the path starts with /cell-leader-guide/app, redirect to the Expo app root.
+        // Otherwise, redirect to the cell leader guide root.
+        var path = window.location.pathname;
+        var appBase = '/cell-leader-guide/app';
+
+        if (path.indexOf(appBase) === 0) {
+            // User was in the Expo app (e.g. /cell-leader-guide/app/ministry)
+            // Save path so the app can restore it if needed
+            sessionStorage.setItem('spa_redirect', path);
+            window.location.replace(appBase + '/');
+        } else {
+            // User was somewhere else
+            window.location.replace('/cell-leader-guide/');
+        }
+    </script>
+</head>
+
+<body></body>
+
+</html>
