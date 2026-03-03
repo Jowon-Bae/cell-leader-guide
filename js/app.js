@@ -278,37 +278,37 @@ function showLoginModal(onSuccessCallback, instant = false) {
 
     if (!isPreRendered) {
         container.innerHTML = `
-            <div class="modal-content ${instant ? '' : 'fade-in'}" style="width: 90%; max-width: 400px; text-align: center; background: #1a237e url('assets/background_card.jpeg') no-repeat center center / cover; color: white;">
+            <div class="modal-content ${instant ? '' : 'fade-in'}" style="width: 90%; max-width: 400px; text-align: center; background: #1a237e url('assets/background_card.jpeg') no-repeat center center / cover; color: white; max-height: 95vh; overflow-y: visible; padding: 15px; border-radius: 16px;">
                 <!-- Dark overlay to ensure text readability against the potentially bright background image -->
-                <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); border-radius: var(--radius-lg); z-index: 1;"></div>
+                <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); border-radius: 16px; z-index: 1;"></div>
                 
-                <div style="position: relative; z-index: 2; padding: 10px;">
-                    <div style="margin-bottom: var(--spacing-md);">
-                        <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                <div style="position: relative; z-index: 2;">
+                    <div style="margin-bottom: 8px;">
+                        <img src="assets/logo.png" alt="Logo" style="width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
                     </div>
-                    <h2 style="margin-bottom: var(--spacing-sm); color: white; font-family: 'Dancing Script', cursive; font-size: 2.5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Welcome!</h2>
-                    <p style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-bottom: var(--spacing-lg); text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                    <h2 style="margin-bottom: 4px; color: white; font-family: 'Dancing Script', cursive; font-size: 2.2rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Welcome!</h2>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin-bottom: 16px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); line-height: 1.3;">
                         셀장 가이드에 오신 것을 환영합니다.<br>이름과 커뮤니티(셀), 암호를 입력해 주세요.
                     </p>
                     
-                    <div style="text-align: left; margin-bottom: var(--spacing-sm);">
-                        <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Name</label>
-                        <input type="text" id="login-name" placeholder="홍길동" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
+                    <div style="text-align: left; margin-bottom: 12px;">
+                        <label style="display:block; font-size:0.8rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Name</label>
+                        <input type="text" id="login-name" placeholder="홍길동" style="width: 100%; border-sizing: border-box; padding: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 0.95rem; background: rgba(255,255,255,0.9); color: #333;">
                     </div>
                     
-                    <div style="text-align: left; margin-bottom: var(--spacing-sm);">
-                        <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Community</label>
-                        <input type="text" id="login-cell" placeholder="(예: 마태)" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
+                    <div style="text-align: left; margin-bottom: 12px;">
+                        <label style="display:block; font-size:0.8rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Community</label>
+                        <input type="text" id="login-cell" placeholder="(예: 마태)" style="width: 100%; border-sizing: border-box; padding: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 0.95rem; background: rgba(255,255,255,0.9); color: #333;">
                     </div>
                     
-                    <div style="text-align: left; margin-bottom: var(--spacing-lg);">
-                        <label style="display:block; font-size:0.85rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Password</label>
-                        <input type="password" id="login-code" placeholder="교회에서 안내받은 암호" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333;">
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <label style="display:block; font-size:0.8rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Password</label>
+                        <input type="password" id="login-code" placeholder="교회에서 안내받은 암호" style="width: 100%; border-sizing: border-box; padding: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 0.95rem; background: rgba(255,255,255,0.9); color: #333;">
                     </div>
                     
-                    <div id="login-error" style="color: #ff8a80; font-size: 0.85rem; margin-bottom: var(--spacing-md); display:none; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></div>
+                    <div id="login-error" style="color: #ff8a80; font-size: 0.85rem; margin-bottom: 12px; display:none; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></div>
                     
-                    <button id="login-submit-btn" class="modal-close-btn" style="width:100%; padding: 16px; font-size: 1.1rem; border-radius: 12px; background-color: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(5px);">시작하기</button>
+                    <button id="login-submit-btn" class="modal-close-btn" style="width:100%; padding: 12px; font-size: 1rem; border-radius: 12px; background-color: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(5px); font-weight: bold;">시작하기</button>
                 </div>
             </div>
         `;
