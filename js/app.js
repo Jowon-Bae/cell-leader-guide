@@ -4,7 +4,7 @@ import { renderMeeting } from './meeting.js';
 import { renderFuneral } from './funeral.js';
 import { renderCommunity } from './community.js';
 import { renderVideoDetail } from './video_detail.js';
-import { renderSchedule } from './schedule.js';
+import { renderSchedule } from './schedule.js?v=2';
 
 // State
 let currentTab = 'home';
