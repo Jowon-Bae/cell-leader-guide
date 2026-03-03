@@ -1,37 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>official-church-app</title>
-    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
-    <style id="expo-reset">
-      /* These styles make the body full-height */
-      html,
-      body {
-        height: 100%;
-      }
-      /* These styles disable body scrolling if you are using <ScrollView> */
-      body {
-        overflow: hidden;
-      }
-      /* These styles make the root element full-height */
-      #root {
-        display: flex;
-        height: 100%;
-        flex: 1;
-      }
-    </style>
-  <link rel="preload" href="/cell-leader-guide/app/_expo/static/css/web-e7b4f4718bfd28be8df3dfe4075a3fe5.css" as="style"><link rel="stylesheet" href="/cell-leader-guide/app/_expo/static/css/web-e7b4f4718bfd28be8df3dfe4075a3fe5.css"><link rel="icon" href="/cell-leader-guide/app/favicon.ico" /></head>
-
-  <body>
-    <!-- Use static rendering with Expo Router to support running without JavaScript. -->
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <!-- The root element for your Expo app. -->
-    <div id="root"></div>
-  <script src="/cell-leader-guide/app/_expo/static/js/web/entry-c1d4c423547e2032af8978e735f430d1.js" defer></script>
-</body>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Seoul Dream Church</title>
+  <script>
+    // GitHub Pages SPA redirect
+    // When a page refresh happens on a deep route like /app/ministry,
+    // GitHub Pages returns 404. This script redirects back to the app
+    // with the current path preserved as a query parameter.
+    var path = window.location.pathname;
+    var base = '/cell-leader-guide/app';
+    // Redirect to base app URL so React Router can handle the route
+    window.location.replace(base + '/?redirect=' + encodeURIComponent(path.replace(base, '') || '/'));
+  </script>
+</head>
+<body></body>
 </html>
