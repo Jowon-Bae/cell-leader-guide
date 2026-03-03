@@ -1,5 +1,5 @@
-// Service Worker v178 - Force cache clear update for deep link fix
-const CACHE_VERSION = 'v178';
+// Service Worker v179 - Force cache clear update for PWA deep link fix
+const CACHE_VERSION = 'v179';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
