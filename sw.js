@@ -1,15 +1,28 @@
-// Basic Service Worker to enable PWA installation (v168)
+// Service Worker v175 - Force cache clear update
+const CACHE_VERSION = 'v175';
+
 self.addEventListener('install', (e) => {
-    console.log('[Service Worker] Install');
-    self.skipWaiting(); // Force activation
+    console.log('[Service Worker] Install', CACHE_VERSION);
+    // Force this SW to become active immediately
+    e.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', (e) => {
-    console.log('[Service Worker] Activate');
-    e.waitUntil(self.clients.claim()); // Force control over clients
+    console.log('[Service Worker] Activate', CACHE_VERSION);
+    // Delete ALL old caches to force fresh code load
+    e.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    console.log('[Service Worker] Deleting old cache:', cacheName);
+                    return caches.delete(cacheName);
+                })
+            );
+        }).then(() => self.clients.claim())
+    );
 });
 
 self.addEventListener('fetch', (e) => {
-    // Pass through all requests - basic implementation
-    e.respondWith(fetch(e.request));
+    // Network-first: always fetch fresh, never serve stale cache
+    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
 });
