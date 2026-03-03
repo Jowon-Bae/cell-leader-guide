@@ -1,5 +1,5 @@
-// Service Worker v176 - Force cache clear update for banner images
-const CACHE_VERSION = 'v176';
+// Service Worker v177 - Force cache clear update for banner images
+const CACHE_VERSION = 'v177';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
