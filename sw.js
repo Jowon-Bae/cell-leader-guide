@@ -1,5 +1,5 @@
-// Service Worker v186 - Update Upcoming Events content and scripture banner
-const CACHE_VERSION = 'v186';
+// Service Worker v187 - Add Friday Prayer and Shout J333 banners
+const CACHE_VERSION = 'v187';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
