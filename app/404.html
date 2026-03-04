@@ -2,10 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Redirecting...</title>
+  <title>Seoul Dream Church</title>
   <script>
-    sessionStorage.setItem('spa_redirect', window.location.pathname + window.location.search);
-    window.location.replace('/cell-leader-guide/app/');
+    // GitHub Pages SPA redirect
+    // When a page refresh happens on a deep route like /app/ministry,
+    // GitHub Pages returns 404. This script redirects back to the app
+    // with the current path preserved as a query parameter.
+    var path = window.location.pathname;
+    var base = '/cell-leader-guide/app';
+    // Redirect to base app URL so React Router can handle the route
+    window.location.replace(base + '/?redirect=' + encodeURIComponent(path.replace(base, '') || '/'));
   </script>
 </head>
 <body></body>
