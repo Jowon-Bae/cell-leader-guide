@@ -1,5 +1,5 @@
-// Service Worker v190 - Text typo fix, bottom tab fix, and 4 image replacements
-const CACHE_VERSION = 'v190';
+// Service Worker v191 - Fix NFD/NFC white screen crash by renaming Korean image files
+const CACHE_VERSION = 'v191';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
