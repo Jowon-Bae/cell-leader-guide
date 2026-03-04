@@ -1,5 +1,5 @@
-// Service Worker v189 - Update Home Screen slides and fix Upcoming Events header UI
-const CACHE_VERSION = 'v189';
+// Service Worker v190 - Text typo fix, bottom tab fix, and 4 image replacements
+const CACHE_VERSION = 'v190';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
