@@ -1,5 +1,5 @@
-// Service Worker v185 - Update Reading Jesus banner image
-const CACHE_VERSION = 'v185';
+// Service Worker v186 - Update Upcoming Events content and scripture banner
+const CACHE_VERSION = 'v186';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
