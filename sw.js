@@ -1,5 +1,5 @@
-// Service Worker v188 - Enable Global Bottom Tabs and update Good Friday banner
-const CACHE_VERSION = 'v188';
+// Service Worker v189 - Update Home Screen slides and fix Upcoming Events header UI
+const CACHE_VERSION = 'v189';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
