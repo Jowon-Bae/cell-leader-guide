@@ -1,5 +1,5 @@
-// Service Worker v183 - Restore original mission images and update links
-const CACHE_VERSION = 'v183';
+// Service Worker v184 - Update Upcoming Events content and banners
+const CACHE_VERSION = 'v184';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
