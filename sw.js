@@ -1,5 +1,5 @@
-// Service Worker v187 - Add Friday Prayer and Shout J333 banners
-const CACHE_VERSION = 'v187';
+// Service Worker v188 - Enable Global Bottom Tabs and update Good Friday banner
+const CACHE_VERSION = 'v188';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
