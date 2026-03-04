@@ -1,5 +1,5 @@
-// Service Worker v181 - Try alternative URL scheme
-const CACHE_VERSION = 'v181';
+// Service Worker v182 - Update Mission Details Page
+const CACHE_VERSION = 'v182';
 
 self.addEventListener('install', (e) => {
     console.log('[Service Worker] Install', CACHE_VERSION);
