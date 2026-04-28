@@ -1,12 +1,8 @@
-// User Profile & Simple Client-Side Authentication
+// User Profile & Client-Side Authentication
 
 // The shared community password
 const AUTH_CODE = 'dream2026';
-
-// List of allowed users
-const ALLOWED_NAMES = [
-    '김여호수아', '신도배', '배주원', '이상호', '김강림', '문현철', '곽은주'
-];
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwCr36qbN7FZDuiad0R3-8HVl2eTjNvIOzgDgzToHKwbPplsLFdhlksjTC3ZnQTG9cY/exec';
 
 export const ProfileManager = {
     // Current user state
@@ -25,11 +21,9 @@ export const ProfileManager = {
                     return false;
                 }
 
-                // Extra security: if they somehow logged in before with a bad name, kick them out
-                if (!ALLOWED_NAMES.includes(this.user.name)) {
-                    this.clearProfile();
-                    return false;
-                }
+                // Note: We don't check against ALLOWED_NAMES here anymore
+                // because doing an async fetch on every init() would delay the app loading.
+                // If they have the profile object and passed auth once, we trust it until cleared.
 
                 return true;
             } catch (e) {
@@ -41,20 +35,29 @@ export const ProfileManager = {
         return false;
     },
 
-    // Save profile with authentication flag
-    saveProfile(name, cellName, inputCode) {
+    // Save profile with authentication flag (Now ASYNC)
+    async saveProfile(name, cellName, inputCode) {
         if (!name || name.trim() === '') {
             return { success: false, message: '이름을 입력해주세요.' };
         }
 
         const cleanName = name.trim();
 
-        if (!ALLOWED_NAMES.includes(cleanName)) {
-            return { success: false, message: '등록되지 않은 사용자입니다. (이름을 확인해주세요)' };
-        }
-
         if (inputCode !== AUTH_CODE) {
             return { success: false, message: '비밀번호가 일치하지 않습니다.' };
+        }
+
+        try {
+            // Fetch allowed names from Google Sheets
+            const response = await fetch(`${GAS_URL}?action=getLeaders`);
+            const allowedNames = await response.json();
+            
+            if (!Array.isArray(allowedNames) || !allowedNames.includes(cleanName)) {
+                return { success: false, message: '등록되지 않은 사용자입니다. (구글 시트에 등록된 이름을 확인해주세요)' };
+            }
+        } catch (error) {
+            console.error("Failed to fetch leaders list:", error);
+            return { success: false, message: '명단을 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' };
         }
 
         this.user = {

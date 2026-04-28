@@ -324,13 +324,24 @@ function showLoginModal(onSuccessCallback, instant = false) {
     const nameInput = document.getElementById('login-name');
     const cellInput = document.getElementById('login-cell');
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         const name = nameInput.value;
         const cell = cellInput.value;
         const code = codeInput.value;
         const errorDiv = document.getElementById('login-error');
 
-        const result = ProfileManager.saveProfile(name, cell, code);
+        // Disable button and show loading state
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.innerText = "명단 확인 중...";
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
+
+        const result = await ProfileManager.saveProfile(name, cell, code);
+
+        // Restore button state
+        submitBtn.innerText = originalBtnText;
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
 
         if (result.success) {
             // Hide Modal
