@@ -2,7 +2,7 @@
 
 // The shared community password
 const AUTH_CODE = 'dream2026';
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwCr36qbN7FZDuiad0R3-8HVl2eTjNvIOzgDgzToHKwbPplsLFdhlksjTC3ZnQTG9cY/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyhVzV1SYeVN6wYtoX6iig1WHCQONok7IqyPrk1IbOfa5spZxoyO2YfsC1uIgUYsX3r/exec';
 
 export const ProfileManager = {
     // Current user state
