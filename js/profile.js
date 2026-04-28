@@ -50,25 +50,30 @@ export const ProfileManager = {
         try {
             // Fetch allowed names from Google Sheets
             const response = await fetch(`${GAS_URL}?action=getLeaders`);
-            const allowedNames = await response.json();
+            const allowedLeaders = await response.json();
             
-            if (!Array.isArray(allowedNames) || !allowedNames.includes(cleanName)) {
+            // Check if the name exists in the fetched list
+            const leaderInfo = allowedLeaders.find(leader => leader.name === cleanName);
+
+            if (!leaderInfo) {
                 return { success: false, message: '등록되지 않은 사용자입니다. (구글 시트에 등록된 이름을 확인해주세요)' };
             }
+
+            this.user = {
+                name: cleanName,
+                cellName: cellName ? cellName.trim() : '',
+                timeSlot: leaderInfo.timeSlot || '2부', // Default to 2부 if missing
+                isAuthenticated: true,
+                setupDate: new Date().toISOString()
+            };
+
+            sessionStorage.setItem('sd_cell_leader_profile', JSON.stringify(this.user));
+            return { success: true };
+
         } catch (error) {
             console.error("Failed to fetch leaders list:", error);
             return { success: false, message: '명단을 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' };
         }
-
-        this.user = {
-            name: name.trim(),
-            cellName: cellName ? cellName.trim() : '',
-            isAuthenticated: true,
-            setupDate: new Date().toISOString()
-        };
-
-        sessionStorage.setItem('sd_cell_leader_profile', JSON.stringify(this.user));
-        return { success: true };
     },
 
     // Get current profile
