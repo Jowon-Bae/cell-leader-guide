@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function showLoginModal(onSuccessCallback, instant = false) {
     const container = document.getElementById('modal-container');
 
-    const isPreRendered = container.innerHTML.includes('login-code');
+    const isPreRendered = container.innerHTML.includes('login-timeslot');
 
     if (instant) {
         container.classList.add('no-transition');
@@ -307,8 +307,11 @@ function showLoginModal(onSuccessCallback, instant = false) {
                     </div>
                     
                     <div style="text-align: left; margin-bottom: 20px;">
-                        <label style="display:block; font-size:0.8rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Password</label>
-                        <input type="password" id="login-code" placeholder="교회에서 안내받은 암호" style="width: 100%; border-sizing: border-box; padding: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 0.95rem; background: rgba(255,255,255,0.9); color: #333;">
+                        <label style="display:block; font-size:0.8rem; font-weight:bold; color:white; margin-bottom: 4px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">소속 예배 (2부/3부)</label>
+                        <select id="login-timeslot" style="width: 100%; border-sizing: border-box; padding: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 0.95rem; background: rgba(255,255,255,0.9); color: #333;">
+                            <option value="2부">2부 예배 후 모임</option>
+                            <option value="3부">3부 예배 후 모임</option>
+                        </select>
                     </div>
                     
                     <div id="login-error" style="color: #ff8a80; font-size: 0.85rem; margin-bottom: 12px; display:none; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></div>
@@ -320,28 +323,18 @@ function showLoginModal(onSuccessCallback, instant = false) {
     }
 
     const submitBtn = document.getElementById('login-submit-btn');
-    const codeInput = document.getElementById('login-code');
+    const timeSlotInput = document.getElementById('login-timeslot');
     const nameInput = document.getElementById('login-name');
     const cellInput = document.getElementById('login-cell');
 
-    const handleLogin = async () => {
+    const handleLogin = () => {
         const name = nameInput.value;
         const cell = cellInput.value;
-        const code = codeInput.value;
+        const timeSlot = timeSlotInput.value;
         const errorDiv = document.getElementById('login-error');
 
-        // Disable button and show loading state
-        const originalBtnText = submitBtn.innerText;
-        submitBtn.innerText = "명단 확인 중...";
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = "0.7";
-
-        const result = await ProfileManager.saveProfile(name, cell, code);
-
-        // Restore button state
-        submitBtn.innerText = originalBtnText;
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = "1";
+        // saveProfile is now sync
+        const result = ProfileManager.saveProfile(name, cell, timeSlot);
 
         if (result.success) {
             // Hide Modal
